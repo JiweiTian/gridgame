@@ -17,13 +17,5 @@ load('demand1.mat')
 load('demand2.mat')
 
 % Underfrequency load shedding
-% See P. M. Anderson et al., "An adatpive method for setting underfrequency
-% load shedding relays," IEEE Transactions on Power Systems 7(2):647-655, 1992
-global totalLoad2Shed firstLoad2Shed finalLoad2Shed uflsMinDeltaF 
-
-Pstep = 1;
-staticLoad2Shed = Pstep - 0.1042*H1; % Static Load Shed in p.u.
-totalLoad2Shed = 1.05*staticLoad2Shed; % Dynamic Load Shed in p.u.
-firstLoad2Shed = staticLoad2Shed/2;
-finalLoad2Shed = mod(totalLoad2Shed-firstLoad2Shed, 0.1);
-uflsMinDeltaF = -0.8-0.3*floor((totalLoad2Shed-firstLoad2Shed)/0.1);
+global deltaPsafe
+deltaPsafe = -0.3/R1;
