@@ -6,11 +6,11 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.140"
+    ComputedModelVersion    "1.195"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
-  SavedCharacterEncoding  "ISO-8859-1"
+  SavedCharacterEncoding  "windows-1252"
   slprops.hdlmdlprops {
     $PropName		    "HDLParams"
     $ObjectID		    1
@@ -33,15 +33,16 @@ Model {
   FPTRunName		  "Run 1"
   MaxMDLFileLineLength	  120
   InitFcn		  "BevraniAGC3_init"
+  StopFcn		  "BevraniAGC3_stop"
   Created		  "Sun Apr 08 22:56:55 2012"
   Creator		  "ywlaw"
   UpdateHistory		  "UpdateHistoryNever"
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "ywlaw"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Thu Jun 14 14:01:26 2012"
-  RTWModifiedTimeStamp	  261583279
-  ModelVersionFormat	  "1.%<AutoIncrement:140>"
+  LastModifiedDate	  "Tue Jun 19 11:14:18 2012"
+  RTWModifiedTimeStamp	  262001808
+  ModelVersionFormat	  "1.%<AutoIncrement:195>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -79,7 +80,6 @@ Model {
     $ObjectID		    2
     $ClassName		    "Simulink.SimulationData.ModelLoggingInfo"
     model_		    "TwoAreaAGC"
-    signals_		    []
     overrideMode_	    [0.0]
     Array {
       Type		      "Cell"
@@ -145,7 +145,7 @@ Model {
 	  $ObjectID		  4
 	  Version		  "1.12.0"
 	  StartTime		  "0.0"
-	  StopTime		  "600"
+	  StopTime		  "1200"
 	  AbsTol		  "auto"
 	  FixedStep		  "auto"
 	  InitialStep		  "auto"
@@ -626,12 +626,19 @@ Model {
 	  Version		  "1.12.0"
 	  Description		  "HDL Coder custom configuration component"
 	  Name			  "HDL Coder"
+	  Array {
+	    Type		    "Cell"
+	    Dimension		    1
+	    Cell		    ""
+	    PropName		    "HDLConfigFile"
+	  }
+	  HDLCActiveTab		  "0"
 	}
 	PropName		"Components"
       }
       Name		      "Configuration"
       CurrentDlgPage	      "Solver"
-      ConfigPrmDlgPosition     [ 180, 22, 1081, 685 ] 
+      ConfigPrmDlgPosition     [ 204, 103, 1057, 658 ] 
     }
     PropName		    "ConfigurationSets"
   }
@@ -678,17 +685,6 @@ Model {
       Decimation	      "10"
     }
     Block {
-      BlockType		      DiscretePulseGenerator
-      PulseType		      "Sample based"
-      TimeSource	      "Use simulation time"
-      Amplitude		      "1"
-      Period		      "2"
-      PulseWidth	      "1"
-      PhaseDelay	      "0"
-      SampleTime	      "1"
-      VectorParams1D	      on
-    }
-    Block {
       BlockType		      FromWorkspace
       VariableName	      "simulink_input"
       OutDataTypeStr	      "Inherit: auto"
@@ -729,19 +725,19 @@ Model {
       NonVirtualBus	      off
     }
     Block {
-      BlockType		      Product
-      Inputs		      "2"
-      Multiplication	      "Element-wise(.*)"
-      CollapseMode	      "All dimensions"
-      CollapseDim	      "1"
-      InputSameDT	      on
+      BlockType		      Saturate
+      UpperLimitSource	      "Dialog"
+      UpperLimit	      "0.5"
+      LowerLimitSource	      "Dialog"
+      LowerLimit	      "-0.5"
+      LinearizeAsGain	      on
+      ZeroCross		      on
+      SampleTime	      "-1"
       OutMin		      "[]"
       OutMax		      "[]"
-      OutDataTypeStr	      "Inherit: Same as first input"
+      OutDataTypeStr	      "Inherit: Same as input"
       LockScale		      off
-      RndMeth		      "Zero"
-      SaturateOnIntegerOverflow	on
-      SampleTime	      "-1"
+      RndMeth		      "Floor"
     }
     Block {
       BlockType		      Scope
@@ -800,18 +796,10 @@ Model {
       ContinuousStateAttributes	"''"
       Realization	      "auto"
     }
-    Block {
-      BlockType		      UniformRandomNumber
-      Minimum		      "-1"
-      Maximum		      "1"
-      Seed		      "0"
-      SampleTime	      "-1"
-      VectorParams1D	      on
-    }
   }
   System {
     Name		    "BevraniAGC2"
-    Location		    [4, 73, 1284, 797]
+    Location		    [514, 99, 1692, 925]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -823,20 +811,21 @@ Model {
     TiledPaperMargins	    [1.270000, 1.270000, 1.270000, 1.270000]
     TiledPageScale	    1
     ShowPageBoundaries	    off
-    ZoomFactor		    "163"
+    ZoomFactor		    "161"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "145"
+    SIDHighWatermark	    "160"
     Block {
       BlockType		      Scope
       Name		      "Attack freq"
       SID		      "136"
       Ports		      [1]
-      Position		      [200, 93, 215, 107]
+      Position		      [200, 105, 210, 115]
       ZOrder		      -3
-      BlockMirror	      on
+      BlockRotation	      270
+      NamePlacement	      "alternate"
       ShowName		      off
       Floating		      off
-      Location		      [1281, 571, 2561, 999]
+      Location		      [3, 71, 1285, 455]
       Open		      off
       NumInputPorts	      "1"
       ZoomMode		      "yonly"
@@ -865,23 +854,10 @@ Model {
       SampleTime	      "0"
     }
     Block {
-      BlockType		      UniformRandomNumber
-      Name		      "Attack signal"
-      SID		      "131"
-      Position		      [380, 142, 400, 158]
-      ZOrder		      -23
-      BlockMirror	      on
-      NamePlacement	      "alternate"
-      Minimum		      "-3"
-      Maximum		      "-0.5"
-      Seed		      "1234"
-      SampleTime	      "60"
-    }
-    Block {
       BlockType		      Gain
-      Name		      "Bias\nfactor 1"
+      Name		      "Bias\nfactor"
       SID		      "54"
-      Position		      [50, 175, 80, 205]
+      Position		      [25, 175, 55, 205]
       ZOrder		      -8
       BlockRotation	      270
       BlockMirror	      on
@@ -894,9 +870,10 @@ Model {
       BlockType		      Gain
       Name		      "Bias\nfactor 2"
       SID		      "64"
-      Position		      [50, 390, 80, 420]
+      Position		      [25, 390, 55, 420]
       ZOrder		      -8
       BlockRotation	      270
+      ShowName		      off
       Gain		      "B2"
       ParamDataTypeStr	      "Inherit: Inherit via internal rule"
       OutDataTypeStr	      "Inherit: Inherit via internal rule"
@@ -906,8 +883,28 @@ Model {
       BlockType		      Clock
       Name		      "Clock"
       SID		      "142"
-      Position		      [580, 128, 595, 142]
+      Position		      [358, 130, 372, 145]
       ZOrder		      -4
+      BlockRotation	      270
+      ShowName		      off
+    }
+    Block {
+      BlockType		      Clock
+      Name		      "Clock1"
+      SID		      "155"
+      Position		      [330, 108, 345, 122]
+      ZOrder		      -4
+      BlockMirror	      on
+      NamePlacement	      "alternate"
+      ShowName		      off
+    }
+    Block {
+      BlockType		      Clock
+      Name		      "Clock2"
+      SID		      "156"
+      Position		      [358, 435, 372, 450]
+      ZOrder		      -4
+      BlockRotation	      270
       BlockMirror	      on
       NamePlacement	      "alternate"
       ShowName		      off
@@ -917,7 +914,7 @@ Model {
       Name		      "Corrupted freq"
       SID		      "89"
       Ports		      [1]
-      Position		      [153, 180, 167, 195]
+      Position		      [55, 165, 65, 175]
       ZOrder		      -3
       BlockRotation	      270
       BlockMirror	      on
@@ -952,49 +949,10 @@ Model {
       SampleTime	      "0"
     }
     Block {
-      BlockType		      Scope
-      Name		      "Corrupted freq2"
-      SID		      "138"
-      Ports		      [1]
-      Position		      [363, 95, 377, 110]
-      ZOrder		      -3
-      BlockRotation	      270
-      NamePlacement	      "alternate"
-      ShowName		      off
-      Floating		      off
-      Location		      [1281, 51, 2561, 516]
-      Open		      off
-      NumInputPorts	      "1"
-      ZoomMode		      "yonly"
-      List {
-	ListType		AxesTitles
-	axes1			"%<SignalLabel>"
-      }
-      List {
-	ListType		ScopeGraphics
-	FigureColor		"[0.501960784313725 0.501960784313725 0.501960784313725]"
-	AxesColor		"[0 0 0]"
-	AxesTickColor		"[1 1 1]"
-	LineColors		"[1 1 0;1 0 1;0 1 1;1 0 0;0 1 0;0 0 1]"
-	LineStyles		"-|-|-|-|-|-"
-	LineWidths		"[0.5 0.5 0.5 0.5 0.5 0.5]"
-	MarkerStyles		"none|none|none|none|none|none"
-      }
-      ShowLegends	      off
-      TimeRange		      "20"
-      YMin		      "-4"
-      YMax		      "1"
-      SaveToWorkspace	      on
-      SaveName		      "attackfreq1"
-      DataFormat	      "StructureWithTime"
-      LimitDataPoints	      off
-      SampleTime	      "0"
-    }
-    Block {
       BlockType		      TransferFcn
       Name		      "Delta Ptie"
       SID		      "61"
-      Position		      [470, 277, 530, 313]
+      Position		      [445, 277, 505, 313]
       ZOrder		      -9
       BlockMirror	      on
       NamePlacement	      "alternate"
@@ -1004,13 +962,13 @@ Model {
     }
     Block {
       BlockType		      Scope
-      Name		      "Delta f1"
+      Name		      "Delta f"
       SID		      "49"
       Ports		      [1]
-      Position		      [605, 219, 620, 241]
+      Position		      [580, 219, 595, 241]
       ZOrder		      -3
       Floating		      off
-      Location		      [1, 71, 1281, 795]
+      Location		      [6, 71, 1286, 795]
       Open		      off
       NumInputPorts	      "1"
       List {
@@ -1042,8 +1000,9 @@ Model {
       Name		      "Delta f2"
       SID		      "65"
       Ports		      [1]
-      Position		      [605, 354, 620, 376]
+      Position		      [580, 354, 595, 376]
       ZOrder		      -3
+      ShowName		      off
       Floating		      off
       Location		      [851, 54, 1672, 327]
       Open		      off
@@ -1073,7 +1032,7 @@ Model {
       BlockType		      FromWorkspace
       Name		      "From\nWorkspace"
       SID		      "102"
-      Position		      [340, 171, 400, 189]
+      Position		      [315, 171, 375, 189]
       ZOrder		      -10
       ShowName		      off
       VariableName	      "demand1"
@@ -1084,9 +1043,9 @@ Model {
       BlockType		      FromWorkspace
       Name		      "From\nWorkspace1"
       SID		      "108"
-      Position		      [490, 395, 550, 415]
+      Position		      [315, 405, 375, 425]
       ZOrder		      -10
-      BlockMirror	      on
+      NamePlacement	      "alternate"
       ShowName		      off
       VariableName	      "demand2"
       SampleTime	      "5"
@@ -1096,7 +1055,7 @@ Model {
       BlockType		      Gain
       Name		      "Gain1"
       SID		      "97"
-      Position		      [434, 315, 456, 335]
+      Position		      [409, 315, 431, 335]
       ZOrder		      -8
       BlockRotation	      270
       BlockMirror	      on
@@ -1110,7 +1069,7 @@ Model {
       BlockType		      Gain
       Name		      "Gain2"
       SID		      "98"
-      Position		      [54, 315, 76, 335]
+      Position		      [29, 315, 51, 335]
       ZOrder		      -8
       BlockRotation	      270
       BlockMirror	      on
@@ -1122,9 +1081,9 @@ Model {
     }
     Block {
       BlockType		      TransferFcn
-      Name		      "Governor 1"
+      Name		      "Governor"
       SID		      "5"
-      Position		      [250, 212, 310, 248]
+      Position		      [225, 212, 285, 248]
       ZOrder		      -9
       Denominator	      "[Tg1 1]"
     }
@@ -1132,8 +1091,9 @@ Model {
       BlockType		      TransferFcn
       Name		      "Governor 2"
       SID		      "66"
-      Position		      [250, 347, 310, 383]
+      Position		      [225, 347, 285, 383]
       ZOrder		      -9
+      ShowName		      off
       Denominator	      "[Tg2 1]"
     }
     Block {
@@ -1141,51 +1101,112 @@ Model {
       Name		      "Interpreted MATLAB\nFunction"
       SID		      "140"
       Ports		      [1, 1]
-      Position		      [465, 134, 525, 156]
+      Position		      [450, 170, 510, 190]
       ZOrder		      -2
       BlockMirror	      on
       ShowName		      off
-      MATLABFcn		      "UFLS(u(1),u(2),u(3))"
+      MATLABFcn		      "UFLS(u(1),u(2),u(3),u(4))"
+      SampleTime	      "0.05"
+    }
+    Block {
+      BlockType		      MATLABFcn
+      Name		      "Interpreted MATLAB\nFunction1"
+      SID		      "146"
+      Ports		      [1, 1]
+      Position		      [215, 123, 275, 137]
+      ZOrder		      -2
+      BlockMirror	      on
+      NamePlacement	      "alternate"
+      ShowName		      off
+      MATLABFcn		      "injectfreq(u(1),u(2))"
+      SampleTime	      "5"
+    }
+    Block {
+      BlockType		      MATLABFcn
+      Name		      "Interpreted MATLAB\nFunction2"
+      SID		      "150"
+      Ports		      [1, 1]
+      Position		      [215, 138, 275, 152]
+      ZOrder		      -2
+      BlockMirror	      on
+      NamePlacement	      "alternate"
+      ShowName		      off
+      MATLABFcn		      "defenseswitch(u(1),u(2))"
+      SampleTime	      "0.05"
+    }
+    Block {
+      BlockType		      MATLABFcn
+      Name		      "Interpreted MATLAB\nFunction3"
+      SID		      "157"
+      Ports		      [1, 1]
+      Position		      [450, 405, 510, 425]
+      ZOrder		      -2
+      BlockMirror	      on
+      ShowName		      off
+      MATLABFcn		      "UFLS2(u(1),u(2),u(3),u(4))"
       SampleTime	      "0.05"
     }
     Block {
       BlockType		      Mux
       Name		      "Mux"
       SID		      "143"
-      Ports		      [3, 1]
-      Position		      [545, 126, 550, 164]
+      Ports		      [4, 1]
+      Position		      [355, 110, 405, 115]
+      ZOrder		      -16
+      BlockRotation	      270
+      ShowName		      off
+      DisplayOption	      "bar"
+    }
+    Block {
+      BlockType		      Mux
+      Name		      "Mux1"
+      SID		      "148"
+      Ports		      [2, 1]
+      Position		      [300, 101, 305, 159]
       ZOrder		      -16
       BlockMirror	      on
       NamePlacement	      "alternate"
       ShowName		      off
-      Inputs		      "3"
+      Inputs		      "2"
       DisplayOption	      "bar"
     }
     Block {
-      BlockType		      Product
-      Name		      "Product"
-      SID		      "137"
+      BlockType		      Mux
+      Name		      "Mux2"
+      SID		      "151"
       Ports		      [2, 1]
-      Position		      [240, 82, 270, 113]
-      ZOrder		      -19
+      Position		      [149, 105, 191, 110]
+      ZOrder		      -16
+      BlockRotation	      270
+      ShowName		      off
+      Inputs		      "2"
+      DisplayOption	      "bar"
+    }
+    Block {
+      BlockType		      Mux
+      Name		      "Mux3"
+      SID		      "158"
+      Ports		      [4, 1]
+      Position		      [358, 465, 402, 470]
+      ZOrder		      -16
+      BlockRotation	      270
       BlockMirror	      on
       NamePlacement	      "alternate"
-      InputSameDT	      off
-      OutDataTypeStr	      "Inherit: Inherit via internal rule"
-      SaturateOnIntegerOverflow	off
+      ShowName		      off
+      DisplayOption	      "bar"
     }
     Block {
       BlockType		      Scope
       Name		      "Pshed"
       SID		      "104"
       Ports		      [1]
-      Position		      [438, 105, 452, 120]
+      Position		      [439, 195, 451, 205]
       ZOrder		      -3
       BlockRotation	      270
-      NamePlacement	      "alternate"
+      BlockMirror	      on
       ShowName		      off
       Floating		      off
-      Location		      [5, 72, 1277, 791]
+      Location		      [6, 72, 1278, 791]
       Open		      off
       NumInputPorts	      "1"
       List {
@@ -1213,252 +1234,17 @@ Model {
       SampleTime	      "0"
     }
     Block {
-      BlockType		      DiscretePulseGenerator
-      Name		      "Pulse\nGenerator"
-      SID		      "133"
-      Ports		      [0, 1]
-      Position		      [340, 152, 360, 168]
-      ZOrder		      -13
-      BlockMirror	      on
-      NamePlacement	      "alternate"
-      ShowName		      off
-      PulseType		      "Time based"
-      Period		      "60"
-      PulseWidth	      "10"
-      PhaseDelay	      "100"
-    }
-    Block {
-      BlockType		      TransferFcn
-      Name		      "Rotor / load 1"
-      SID		      "2"
-      Position		      [490, 212, 550, 248]
-      ZOrder		      -9
-      Denominator	      "[2*H1 D1]"
-    }
-    Block {
-      BlockType		      TransferFcn
-      Name		      "Rotor / load 2"
-      SID		      "67"
-      Position		      [490, 347, 550, 383]
-      ZOrder		      -9
-      NamePlacement	      "alternate"
-      Denominator	      "[2*H2 D2]"
-    }
-    Block {
-      BlockType		      TransferFcn
-      Name		      "Simplest AGC 1"
-      SID		      "14"
-      Position		      [105, 212, 165, 248]
-      ZOrder		      -9
-      Numerator		      "[-K1]"
-      Denominator	      "[1 0]"
-    }
-    Block {
-      BlockType		      TransferFcn
-      Name		      "Simplest AGC 2"
-      SID		      "68"
-      Position		      [105, 347, 165, 383]
-      ZOrder		      -9
-      Numerator		      "[-K2]"
-      Denominator	      "[1 0]"
-    }
-    Block {
-      BlockType		      Gain
-      Name		      "Speed\nregulation 1"
-      SID		      "9"
-      Position		      [190, 175, 220, 205]
-      ZOrder		      -8
-      BlockRotation	      270
-      BlockMirror	      on
-      Gain		      "1/R1"
-      ParamDataTypeStr	      "Inherit: Inherit via internal rule"
-      OutDataTypeStr	      "Inherit: Inherit via internal rule"
-      SaturateOnIntegerOverflow	off
-    }
-    Block {
-      BlockType		      Gain
-      Name		      "Speed\nregulation 2"
-      SID		      "69"
-      Position		      [190, 390, 220, 420]
-      ZOrder		      -8
-      BlockRotation	      270
-      Gain		      "1/R2"
-      ParamDataTypeStr	      "Inherit: Inherit via internal rule"
-      OutDataTypeStr	      "Inherit: Inherit via internal rule"
-      SaturateOnIntegerOverflow	off
-    }
-    Block {
-      BlockType		      Sum
-      Name		      "Sum"
-      SID		      "4"
-      Ports		      [3, 1]
-      Position		      [435, 220, 455, 240]
-      ZOrder		      -18
-      ShowName		      off
-      IconShape		      "round"
-      Inputs		      "-+-"
-      InputSameDT	      off
-      OutDataTypeStr	      "Inherit: Inherit via internal rule"
-      SaturateOnIntegerOverflow	off
-    }
-    Block {
-      BlockType		      Sum
-      Name		      "Sum1"
-      SID		      "6"
-      Ports		      [2, 1]
-      Position		      [195, 220, 215, 240]
-      ZOrder		      -18
-      ShowName		      off
-      IconShape		      "round"
-      Inputs		      "-+|"
-      InputSameDT	      off
-      OutDataTypeStr	      "Inherit: Inherit via internal rule"
-      SaturateOnIntegerOverflow	off
-    }
-    Block {
-      BlockType		      Sum
-      Name		      "Sum2"
-      SID		      "63"
-      Ports		      [2, 1]
-      Position		      [55, 220, 75, 240]
-      ZOrder		      -18
-      ShowName		      off
-      IconShape		      "round"
-      Inputs		      "+|+"
-      InputSameDT	      off
-      OutDataTypeStr	      "Inherit: Inherit via internal rule"
-      SaturateOnIntegerOverflow	off
-    }
-    Block {
-      BlockType		      Sum
-      Name		      "Sum3"
-      SID		      "96"
-      Ports		      [2, 1]
-      Position		      [575, 285, 595, 305]
-      ZOrder		      -18
-      BlockMirror	      on
-      NamePlacement	      "alternate"
-      ShowName		      off
-      IconShape		      "round"
-      Inputs		      "+|-"
-      InputSameDT	      off
-      OutDataTypeStr	      "Inherit: Inherit via internal rule"
-      SaturateOnIntegerOverflow	off
-    }
-    Block {
-      BlockType		      Sum
-      Name		      "Sum4"
-      SID		      "71"
-      Ports		      [3, 1]
-      Position		      [435, 355, 455, 375]
-      ZOrder		      -18
-      ShowName		      off
-      IconShape		      "round"
-      Inputs		      "-+-"
-      InputSameDT	      off
-      OutDataTypeStr	      "Inherit: Inherit via internal rule"
-      SaturateOnIntegerOverflow	off
-    }
-    Block {
-      BlockType		      Sum
-      Name		      "Sum5"
-      SID		      "72"
-      Ports		      [2, 1]
-      Position		      [195, 355, 215, 375]
-      ZOrder		      -18
-      ShowName		      off
-      IconShape		      "round"
-      Inputs		      "|+-"
-      InputSameDT	      off
-      OutDataTypeStr	      "Inherit: Inherit via internal rule"
-      SaturateOnIntegerOverflow	off
-    }
-    Block {
-      BlockType		      Sum
-      Name		      "Sum6"
-      SID		      "73"
-      Ports		      [2, 1]
-      Position		      [55, 355, 75, 375]
-      ZOrder		      -18
-      ShowName		      off
-      IconShape		      "round"
-      Inputs		      "+|+"
-      InputSameDT	      off
-      OutDataTypeStr	      "Inherit: Inherit via internal rule"
-      SaturateOnIntegerOverflow	off
-    }
-    Block {
-      BlockType		      Sum
-      Name		      "Sum7"
-      SID		      "139"
-      Ports		      [2, 1]
-      Position		      [435, 170, 455, 190]
-      ZOrder		      -18
-      BlockRotation	      270
-      BlockMirror	      on
-      NamePlacement	      "alternate"
-      ShowName		      off
-      IconShape		      "round"
-      Inputs		      "+-|"
-      InputSameDT	      off
-      OutDataTypeStr	      "Inherit: Inherit via internal rule"
-      SaturateOnIntegerOverflow	off
-    }
-    Block {
-      BlockType		      Sum
-      Name		      "Sum8"
-      SID		      "144"
-      Ports		      [2, 1]
-      Position		      [405, 195, 425, 215]
-      ZOrder		      -18
-      ShowName		      off
-      IconShape		      "round"
-      Inputs		      "-|+"
-      InputSameDT	      off
-      OutDataTypeStr	      "Inherit: Inherit via internal rule"
-      SaturateOnIntegerOverflow	off
-    }
-    Block {
-      BlockType		      Switch
-      Name		      "Switch"
-      SID		      "135"
-      Position		      [270, 146, 310, 174]
-      ZOrder		      -18
-      BlockMirror	      on
-      NamePlacement	      "alternate"
-      ShowName		      off
-      Criteria		      "u2 > Threshold"
-      InputSameDT	      off
-      SaturateOnIntegerOverflow	off
-      SampleTime	      "0.1"
-    }
-    Block {
-      BlockType		      TransferFcn
-      Name		      "Turbine 1"
-      SID		      "3"
-      Position		      [340, 212, 400, 248]
-      ZOrder		      -9
-      Denominator	      "[Tt1 1]"
-    }
-    Block {
-      BlockType		      TransferFcn
-      Name		      "Turbine 2"
-      SID		      "74"
-      Position		      [340, 347, 400, 383]
-      ZOrder		      -9
-      Denominator	      "[Tt2 1]"
-    }
-    Block {
       BlockType		      Scope
-      Name		      "deltaPest"
-      SID		      "145"
+      Name		      "Pshed2"
+      SID		      "159"
       Ports		      [1]
-      Position		      [605, 198, 620, 212]
+      Position		      [439, 390, 451, 400]
       ZOrder		      -3
+      BlockRotation	      270
       NamePlacement	      "alternate"
       ShowName		      off
       Floating		      off
-      Location		      [5, 72, 1277, 791]
+      Location		      [263, 232, 1535, 951]
       Open		      off
       NumInputPorts	      "1"
       List {
@@ -1480,10 +1266,250 @@ Model {
       YMin		      "-4"
       YMax		      "1"
       SaveToWorkspace	      on
-      SaveName		      "deltaPest"
+      SaveName		      "Pshed2"
       DataFormat	      "StructureWithTime"
       LimitDataPoints	      off
       SampleTime	      "0"
+    }
+    Block {
+      BlockType		      TransferFcn
+      Name		      "Rotor / load"
+      SID		      "2"
+      Position		      [465, 212, 525, 248]
+      ZOrder		      -9
+      Denominator	      "[2*H1 D1]"
+    }
+    Block {
+      BlockType		      TransferFcn
+      Name		      "Rotor / load 2"
+      SID		      "67"
+      Position		      [465, 347, 525, 383]
+      ZOrder		      -9
+      NamePlacement	      "alternate"
+      ShowName		      off
+      Denominator	      "[2*H2 D2]"
+    }
+    Block {
+      BlockType		      Saturate
+      Name		      "Saturation"
+      SID		      "149"
+      Ports		      [1, 1]
+      Position		      [75, 134, 100, 156]
+      ZOrder		      -15
+      BlockMirror	      on
+      NamePlacement	      "alternate"
+      ShowName		      off
+      InputPortMap	      "u0"
+      UpperLimit	      "100"
+      LowerLimit	      "-100"
+    }
+    Block {
+      BlockType		      TransferFcn
+      Name		      "Simple AGC"
+      SID		      "14"
+      Position		      [80, 212, 140, 248]
+      ZOrder		      -9
+      Numerator		      "[-K_AGC1]"
+      Denominator	      "[1 0]"
+    }
+    Block {
+      BlockType		      TransferFcn
+      Name		      "Simplest AGC 2"
+      SID		      "68"
+      Position		      [80, 347, 140, 383]
+      ZOrder		      -9
+      ShowName		      off
+      Numerator		      "[-K_AGC2]"
+      Denominator	      "[1 0]"
+    }
+    Block {
+      BlockType		      Gain
+      Name		      "Speed\nregulation"
+      SID		      "9"
+      Position		      [165, 175, 195, 205]
+      ZOrder		      -8
+      BlockRotation	      270
+      BlockMirror	      on
+      Gain		      "1/R1"
+      ParamDataTypeStr	      "Inherit: Inherit via internal rule"
+      OutDataTypeStr	      "Inherit: Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
+      BlockType		      Gain
+      Name		      "Speed\nregulation 2"
+      SID		      "69"
+      Position		      [165, 390, 195, 420]
+      ZOrder		      -8
+      BlockRotation	      270
+      ShowName		      off
+      Gain		      "1/R2"
+      ParamDataTypeStr	      "Inherit: Inherit via internal rule"
+      OutDataTypeStr	      "Inherit: Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
+      BlockType		      Sum
+      Name		      "Sum"
+      SID		      "4"
+      Ports		      [3, 1]
+      Position		      [410, 220, 430, 240]
+      ZOrder		      -18
+      ShowName		      off
+      IconShape		      "round"
+      Inputs		      "-+-"
+      InputSameDT	      off
+      OutDataTypeStr	      "Inherit: Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
+      BlockType		      Sum
+      Name		      "Sum1"
+      SID		      "6"
+      Ports		      [2, 1]
+      Position		      [170, 220, 190, 240]
+      ZOrder		      -18
+      ShowName		      off
+      IconShape		      "round"
+      Inputs		      "-+|"
+      InputSameDT	      off
+      OutDataTypeStr	      "Inherit: Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
+      BlockType		      Sum
+      Name		      "Sum10"
+      SID		      "154"
+      Ports		      [2, 1]
+      Position		      [410, 405, 430, 425]
+      ZOrder		      -18
+      BlockRotation	      270
+      ShowName		      off
+      IconShape		      "round"
+      Inputs		      "+|-"
+      InputSameDT	      off
+      OutDataTypeStr	      "Inherit: Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
+      BlockType		      Sum
+      Name		      "Sum2"
+      SID		      "63"
+      Ports		      [2, 1]
+      Position		      [30, 220, 50, 240]
+      ZOrder		      -18
+      ShowName		      off
+      IconShape		      "round"
+      Inputs		      "+|+"
+      InputSameDT	      off
+      OutDataTypeStr	      "Inherit: Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
+      BlockType		      Sum
+      Name		      "Sum3"
+      SID		      "96"
+      Ports		      [2, 1]
+      Position		      [550, 285, 570, 305]
+      ZOrder		      -18
+      BlockMirror	      on
+      NamePlacement	      "alternate"
+      ShowName		      off
+      IconShape		      "round"
+      Inputs		      "+|-"
+      InputSameDT	      off
+      OutDataTypeStr	      "Inherit: Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
+      BlockType		      Sum
+      Name		      "Sum4"
+      SID		      "71"
+      Ports		      [3, 1]
+      Position		      [410, 355, 430, 375]
+      ZOrder		      -18
+      ShowName		      off
+      IconShape		      "round"
+      Inputs		      "-+-"
+      InputSameDT	      off
+      OutDataTypeStr	      "Inherit: Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
+      BlockType		      Sum
+      Name		      "Sum5"
+      SID		      "72"
+      Ports		      [2, 1]
+      Position		      [170, 355, 190, 375]
+      ZOrder		      -18
+      ShowName		      off
+      IconShape		      "round"
+      Inputs		      "|+-"
+      InputSameDT	      off
+      OutDataTypeStr	      "Inherit: Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
+      BlockType		      Sum
+      Name		      "Sum6"
+      SID		      "73"
+      Ports		      [2, 1]
+      Position		      [30, 355, 50, 375]
+      ZOrder		      -18
+      ShowName		      off
+      IconShape		      "round"
+      Inputs		      "+|+"
+      InputSameDT	      off
+      OutDataTypeStr	      "Inherit: Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
+      BlockType		      Sum
+      Name		      "Sum7"
+      SID		      "139"
+      Ports		      [2, 1]
+      Position		      [410, 170, 430, 190]
+      ZOrder		      -18
+      BlockRotation	      270
+      BlockMirror	      on
+      NamePlacement	      "alternate"
+      ShowName		      off
+      IconShape		      "round"
+      Inputs		      "+|-"
+      InputSameDT	      off
+      OutDataTypeStr	      "Inherit: Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
+      BlockType		      Switch
+      Name		      "Switch"
+      SID		      "135"
+      Position		      [125, 119, 145, 171]
+      ZOrder		      -18
+      BlockMirror	      on
+      NamePlacement	      "alternate"
+      ShowName		      off
+      Criteria		      "u2 > Threshold"
+      InputSameDT	      off
+      SaturateOnIntegerOverflow	off
+      SampleTime	      "0.1"
+    }
+    Block {
+      BlockType		      TransferFcn
+      Name		      "Turbine"
+      SID		      "3"
+      Position		      [315, 212, 375, 248]
+      ZOrder		      -9
+      Denominator	      "[Tt1 1]"
+    }
+    Block {
+      BlockType		      TransferFcn
+      Name		      "Turbine 2"
+      SID		      "74"
+      Position		      [315, 347, 375, 383]
+      ZOrder		      -9
+      ShowName		      off
+      Denominator	      "[Tt2 1]"
     }
     Block {
       BlockType		      Reference
@@ -1539,42 +1565,42 @@ Model {
       methode		      off
     }
     Line {
-      SrcBlock		      "Turbine 1"
+      SrcBlock		      "Turbine"
       SrcPort		      1
-      Points		      [10, 0]
+      Points		      [5, 0]
       Branch {
 	DstBlock		"Sum"
 	DstPort			2
       }
       Branch {
-	DstBlock		"Sum8"
-	DstPort			2
+	DstBlock		"Mux"
+	DstPort			3
       }
     }
     Line {
-      SrcBlock		      "Governor 1"
+      SrcBlock		      "Governor"
       SrcPort		      1
-      DstBlock		      "Turbine 1"
+      DstBlock		      "Turbine"
       DstPort		      1
     }
     Line {
       SrcBlock		      "Sum"
       SrcPort		      1
-      DstBlock		      "Rotor / load 1"
+      DstBlock		      "Rotor / load"
       DstPort		      1
     }
     Line {
       SrcBlock		      "Sum1"
       SrcPort		      1
-      DstBlock		      "Governor 1"
+      DstBlock		      "Governor"
       DstPort		      1
     }
     Line {
-      SrcBlock		      "Rotor / load 1"
+      SrcBlock		      "Rotor / load"
       SrcPort		      1
       Points		      [30, 0]
       Branch {
-	DstBlock		"Delta f1"
+	DstBlock		"Delta f"
 	DstPort			1
       }
       Branch {
@@ -1582,26 +1608,46 @@ Model {
 	DstPort			1
       }
       Branch {
-	Points			[0, -60]
+	Points			[0, -70]
 	Branch {
-	  DstBlock		  "Switch"
-	  DstPort		  3
+	  Points		  [-380, 0]
+	  Branch {
+	    DstBlock		    "Switch"
+	    DstPort		    3
+	  }
+	  Branch {
+	    Points		    [0, 0]
+	    Branch {
+	      DstBlock		      "Speed\nregulation"
+	      DstPort		      1
+	    }
+	    Branch {
+	      DstBlock		      "Mux2"
+	      DstPort		      2
+	    }
+	  }
 	}
 	Branch {
-	  Points		  [0, -25]
-	  DstBlock		  "Mux"
-	  DstPort		  2
+	  Points		  [0, -15; -185, 0]
+	  Branch {
+	    DstBlock		    "Mux1"
+	    DstPort		    2
+	  }
+	  Branch {
+	    DstBlock		    "Mux"
+	    DstPort		    2
+	  }
 	}
       }
     }
     Line {
-      SrcBlock		      "Speed\nregulation 1"
+      SrcBlock		      "Speed\nregulation"
       SrcPort		      1
       DstBlock		      "Sum1"
       DstPort		      1
     }
     Line {
-      SrcBlock		      "Simplest AGC 1"
+      SrcBlock		      "Simple AGC"
       SrcPort		      1
       DstBlock		      "Sum1"
       DstPort		      2
@@ -1613,7 +1659,7 @@ Model {
       DstPort		      1
     }
     Line {
-      SrcBlock		      "Bias\nfactor 1"
+      SrcBlock		      "Bias\nfactor"
       SrcPort		      1
       DstBlock		      "Sum2"
       DstPort		      1
@@ -1621,14 +1667,21 @@ Model {
     Line {
       SrcBlock		      "Sum2"
       SrcPort		      1
-      DstBlock		      "Simplest AGC 1"
+      DstBlock		      "Simple AGC"
       DstPort		      1
     }
     Line {
       SrcBlock		      "Turbine 2"
       SrcPort		      1
-      DstBlock		      "Sum4"
-      DstPort		      2
+      Points		      [5, 0]
+      Branch {
+	DstBlock		"Sum4"
+	DstPort			2
+      }
+      Branch {
+	DstBlock		"Mux3"
+	DstPort			3
+      }
     }
     Line {
       SrcBlock		      "Governor 2"
@@ -1661,14 +1714,21 @@ Model {
 	DstPort			2
       }
       Branch {
-	Points			[0, 70; -380, 0]
+	Points			[0, 70; -185, 0]
 	Branch {
-	  DstBlock		  "Speed\nregulation 2"
-	  DstPort		  1
+	  Points		  [-195, 0]
+	  Branch {
+	    DstBlock		    "Speed\nregulation 2"
+	    DstPort		    1
+	  }
+	  Branch {
+	    DstBlock		    "Bias\nfactor 2"
+	    DstPort		    1
+	  }
 	}
 	Branch {
-	  DstBlock		  "Bias\nfactor 2"
-	  DstPort		  1
+	  DstBlock		  "Mux3"
+	  DstPort		  2
 	}
       }
     }
@@ -1733,82 +1793,138 @@ Model {
       DstPort		      1
     }
     Line {
-      SrcBlock		      "From\nWorkspace1"
-      SrcPort		      1
-      Points		      [-40, 0]
-      DstBlock		      "Sum4"
-      DstPort		      3
-    }
-    Line {
-      SrcBlock		      "Pulse\nGenerator"
-      SrcPort		      1
-      Points		      [-10, 0]
-      Branch {
-	DstBlock		"Switch"
-	DstPort			2
-      }
-      Branch {
-	Points			[0, -55]
-	DstBlock		"Product"
-	DstPort			2
-      }
-    }
-    Line {
-      SrcBlock		      "Switch"
-      SrcPort		      1
-      Points		      [-60, 0]
-      Branch {
-	DstBlock		"Speed\nregulation 1"
-	DstPort			1
-      }
-      Branch {
-	Points			[-45, 0]
-	Branch {
-	  DstBlock		  "Bias\nfactor 1"
-	  DstPort		  1
-	}
-	Branch {
-	  DstBlock		  "Corrupted freq"
-	  DstPort		  1
-	}
-      }
-    }
-    Line {
-      SrcBlock		      "Attack signal"
-      SrcPort		      1
-      Points		      [-5, 0]
-      Branch {
-	Points			[-25, 0]
-	Branch {
-	  DstBlock		  "Switch"
-	  DstPort		  1
-	}
-	Branch {
-	  Points		  [0, -60]
-	  DstBlock		  "Product"
-	  DstPort		  1
-	}
-      }
-      Branch {
-	DstBlock		"Corrupted freq2"
-	DstPort			1
-      }
-    }
-    Line {
-      SrcBlock		      "Product"
-      SrcPort		      1
-      DstBlock		      "Attack freq"
-      DstPort		      1
-    }
-    Line {
       SrcBlock		      "Sum7"
       SrcPort		      1
       DstBlock		      "Sum"
       DstPort		      1
     }
     Line {
+      SrcBlock		      "From\nWorkspace"
+      SrcPort		      1
+      Points		      [15, 0]
+      Branch {
+	DstBlock		"Sum7"
+	DstPort			1
+      }
+      Branch {
+	DstBlock		"Mux"
+	DstPort			4
+      }
+    }
+    Line {
+      SrcBlock		      "Interpreted MATLAB\nFunction"
+      SrcPort		      1
+      Points		      [0, 0]
+      Branch {
+	DstBlock		"Sum7"
+	DstPort			2
+      }
+      Branch {
+	DstBlock		"Pshed"
+	DstPort			1
+      }
+    }
+    Line {
+      SrcBlock		      "Mux1"
+      SrcPort		      1
+      DstBlock		      "Interpreted MATLAB\nFunction1"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Switch"
+      SrcPort		      1
+      DstBlock		      "Saturation"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Interpreted MATLAB\nFunction1"
+      SrcPort		      1
+      Points		      [-5, 0]
+      Branch {
+	DstBlock		"Attack freq"
+	DstPort			1
+      }
+      Branch {
+	Points			[-45, 0]
+	Branch {
+	  DstBlock		  "Switch"
+	  DstPort		  1
+	}
+	Branch {
+	  DstBlock		  "Mux2"
+	  DstPort		  1
+	}
+      }
+    }
+    Line {
+      SrcBlock		      "Interpreted MATLAB\nFunction2"
+      SrcPort		      1
+      DstBlock		      "Switch"
+      DstPort		      2
+    }
+    Line {
+      SrcBlock		      "Saturation"
+      SrcPort		      1
+      Points		      [-10, 0]
+      Branch {
+	Points			[-20, 0]
+	DstBlock		"Bias\nfactor"
+	DstPort			1
+      }
+      Branch {
+	DstBlock		"Corrupted freq"
+	DstPort			1
+      }
+    }
+    Line {
+      SrcBlock		      "Mux2"
+      SrcPort		      1
+      Points		      [120, 0]
+      DstBlock		      "Interpreted MATLAB\nFunction2"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Sum10"
+      SrcPort		      1
+      DstBlock		      "Sum4"
+      DstPort		      3
+    }
+    Line {
+      SrcBlock		      "From\nWorkspace1"
+      SrcPort		      1
+      Points		      [15, 0]
+      Branch {
+	DstBlock		"Sum10"
+	DstPort			1
+      }
+      Branch {
+	DstBlock		"Mux3"
+	DstPort			4
+      }
+    }
+    Line {
+      SrcBlock		      "Clock1"
+      SrcPort		      1
+      DstBlock		      "Mux1"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Interpreted MATLAB\nFunction3"
+      SrcPort		      1
+      Points		      [0, 0]
+      Branch {
+	DstBlock		"Sum10"
+	DstPort			2
+      }
+      Branch {
+	DstBlock		"Pshed2"
+	DstPort			1
+      }
+    }
+    Line {
       SrcBlock		      "Mux"
       SrcPort		      1
+      Points		      [145, 0]
       DstBlock		      "Interpreted MATLAB\nFunction"
       DstPort		      1
     }
@@ -1819,43 +1935,17 @@ Model {
       DstPort		      1
     }
     Line {
-      SrcBlock		      "From\nWorkspace"
+      SrcBlock		      "Clock2"
       SrcPort		      1
-      Points		      [10, 0]
-      Branch {
-	DstBlock		"Sum7"
-	DstPort			1
-      }
-      Branch {
-	DstBlock		"Sum8"
-	DstPort			1
-      }
+      DstBlock		      "Mux3"
+      DstPort		      1
     }
     Line {
-      SrcBlock		      "Sum8"
+      SrcBlock		      "Mux3"
       SrcPort		      1
-      Points		      [135, 0]
-      Branch {
-	DstBlock		"Mux"
-	DstPort			3
-      }
-      Branch {
-	DstBlock		"deltaPest"
-	DstPort			1
-      }
-    }
-    Line {
-      SrcBlock		      "Interpreted MATLAB\nFunction"
-      SrcPort		      1
-      Points		      [-15, 0]
-      Branch {
-	DstBlock		"Sum7"
-	DstPort			2
-      }
-      Branch {
-	DstBlock		"Pshed"
-	DstPort			1
-      }
+      Points		      [145, 0]
+      DstBlock		      "Interpreted MATLAB\nFunction3"
+      DstPort		      1
     }
     Annotation {
       SID		      "79"
@@ -1866,7 +1956,7 @@ Model {
     Annotation {
       SID		      "134"
       Name		      "Tie-line power"
-      Position		      [405, 285]
+      Position		      [380, 285]
     }
   }
 }
