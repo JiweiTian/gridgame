@@ -2,17 +2,21 @@
 % Sampling time of this Simulink block should be set to 0.05s.
 function deltaPl = UFLS(t, deltaf, deltaPe, deltaPm)
 
-global deltaPsafe maxShed1 logFile
+global deltaPsafe maxShed1 uflsInited logFile
 persistent timer shedSoFar scheduledShed shedStack lastUnstableTime
 
-if t <= 100
+if t < 100
+  deltaPl = deltaPe;
+  return
+end
+
+if ~uflsInited
   timer = 0;
   shedSoFar = 0;
   scheduledShed = 0;
   shedStack = [];
   lastUnstableTime = 0;
-  deltaPl = deltaPe;
-  return
+  uflsInited = true;
 end
 
 if timer > 0
@@ -50,7 +54,7 @@ elseif -0.4 < deltaf && deltaf <= -0.35
     fprintf(logFile, '[%9.2f] Scheduled level 2 %f + %f\n', t, shedSoFar, scheduledShed);
     return
   end
-elseif shedSoFar > 0 && t - lastUnstableTime >= 10
+elseif shedSoFar > 0 && t - lastUnstableTime >= 30
   fprintf(logFile, '[%9.2f] Load reconnected: %f - %f\n', t, shedSoFar, shedStack(1));
   if numel(shedStack) == 1
     shedSoFar = 0;
