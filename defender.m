@@ -1,7 +1,7 @@
 function out = defender(t, in, attack)
 % attack == 1 indicates "in" is malicious
 
-global N currMeter nSamples flaggedMeter defenderInited logFile
+global N currMeter nSamples flaggedMeter defenderInited aShedSoFar logFile
 persistent buf      % a buffer of N samples
 persistent a1 b1 a2 b2 detAlgos
 persistent actionpmf
@@ -16,12 +16,12 @@ if ~defenderInited
   detAlgos = {};
 
   % Detection Algorithm 1
-  a1 = 20; b1 = 0.6; detAlgos{1} = @(x) 1./(1+exp(-a1*(x/N-b1)));
+  a1 = 20; b1 = 0.5203; detAlgos{1} = @(x) 1./(1+exp(-a1*(x/N-b1)));
 
   % Detection Algorithm 2
-  a2 = 0.3; b2 = 1; detAlgos{2} = @(x) 1 - a2.^((x/N).^b2);
+  a2 = 0.2; b2 = 0.8127; detAlgos{2} = @(x) 1 - a2.^((x/N).^b2);
   
-  actionpmf = [1; 0];	% probability mass function of actions
+  actionpmf = [1, 0];	% probability mass function of actions
 
   defenderInited = true;
 end
@@ -29,14 +29,19 @@ end
 % which sample am I dealing with?
 if nSamples == 1
   buf = [];
+  if sum(aShedSoFar) > 0
+    fprintf(logFile, '[%9.2f] Session start: s1\n', t);
+  else
+    fprintf(logFile, '[%9.2f] Session start: s0\n', t);
+  end
 end
 
 % buffer attack flag
-buf = [attack; buf];
+buf = [buf, attack];
 
 if nSamples == N
   % which Detection Algorithm should I use?
-  [~, action] = histc(rand(1), [0;cumsum(actionpmf)]);
+  [~, action] = histc(rand(1), [0, cumsum(actionpmf)]);
   detAlgo = detAlgos{action};
   attRate = sum(buf>0);
   detProb = detAlgo(attRate);
@@ -52,6 +57,11 @@ if nSamples == N
     currMeter = 1;
     set_param('BevraniAGC2/Attacker/Meter switch', 'sw', '1');
   end
+  if sum(aShedSoFar) > 0
+    fprintf(logFile, '[%9.2f] Session end: s1\n', t);
+  else
+    fprintf(logFile, '[%9.2f] Session end: s0\n', t);
+  end  
 end
 
 nSamples = mod(nSamples, N)+1;
