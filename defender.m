@@ -16,10 +16,10 @@ if ~defenderInited
   detAlgos = {};
 
   % Detection Algorithm 1
-  a1 = 20; b1 = 0.5203; detAlgos{1} = @(x) 1./(1+exp(-a1*(x/N-b1)));
+  a1 = 0.2; b1 = 0.8127; detAlgos{1} = @(x) 1 - a1.^((x/N).^b1);
 
   % Detection Algorithm 2
-  a2 = 0.2; b2 = 0.8127; detAlgos{2} = @(x) 1 - a2.^((x/N).^b2);
+  a2 = 20; b2 = 0.5203; detAlgos{2} = @(x) 1./(1+exp(-a2*(x/N-b2)));
   
   actionpmf = [1, 0];	% probability mass function of actions
 
