@@ -19,56 +19,50 @@
 
 % Dataset 1 is for AGC sampling rate of 1s
 % Dataset 2 is for AGC sampling rate of 2s
-dataset = 1;
+dataset = 2;
+alpha = 0.9; % discount factor
+zerogs0 = false;
 
 if dataset == 1
   % M(a10,d1)
-  M(:,:,1,1)=[3/8,   5/8;  4/77, 73/77];
+  M(:,:,1,1)=[13/21, 8/21; 7/64, 57/64];
   % M(a10,d2)
-  M(:,:,1,2)=[13/21, 8/21; 7/64, 57/64];
+  M(:,:,1,2)=[3/8,   5/8;  4/77, 73/77];
   % M(a20,d1)
-  M(:,:,2,1)=[5/11,  6/11; 8/74, 66/74];
+  M(:,:,2,1)=[3/9,   6/9;  6/76, 70/76];
   % M(a20,d2)
-  M(:,:,2,2)=[3/9,   6/9;  6/76, 70/76];
+  M(:,:,2,2)=[5/11,  6/11; 8/74, 66/74];
   
-  % state s0: G(s0) = [a10,d1 a20,d1; a10,d2 a20,d2]
-  G(:,:,1)=[-8.7984, -8.7652; -8.7975, -8.7787];
-  %G(:,:,1)=[0, 0; 0, 0];
-  % state s1: G(s1) = [a10,d1 a20,d1; a10,d2 a20,d2]
-  G(:,:,2)=[ 0.3473,  0.3505;  0.3046,  0.3719];
+  % state s0: G(s0) = [a10,d1 a10,d2; a20,d1 a20,d2]
+  if ~zerogs0
+    G(:,:,1)=[-8.7975, -8.7984; -8.7787, -8.7652];
+  else
+    G(:,:,1)=[0, 0; 0, 0];
+  end
+  % state s1: G(s1) = [a10,d1 a10,d2; a20,d1 a20,d2]
+  G(:,:,2)=[ 0.3046,  0.3473;  0.3719,  0.3505];
 elseif dataset == 2
   % M(a10,d1)
-  M(:,:,1,1)=[9/14, 5/14; 4/28, 24/28];
+  M(:,:,1,1)=[7/11, 4/11; 4/31, 27/31];
   % M(a10,d2)
-  M(:,:,1,2)=[7/11, 4/11; 4/31, 27/31];
+  M(:,:,1,2)=[9/14, 5/14; 4/28, 24/28];
   % M(a20,d1)
-  M(:,:,2,1)=[7/10, 3/10; 3/32, 29/32];
+  M(:,:,2,1)=[8/12, 4/12; 3/30, 27/30];
   % M(a20,d2)
-  M(:,:,2,2)=[8/12, 4/12; 3/30, 27/30];
+  M(:,:,2,2)=[7/10, 3/10; 3/32, 29/32];
   
-  % state s0: G(s0) = [a10,d1 a20,d1; a10,d2 a20,d2]
-  G(:,:,1)=[-8.7672, -8.7602; -8.7894, -8.7606];
-  %G(:,:,1)=[0, 0; 0, 0];
-  % state s1: G(s1) = [a10,d1 a20,d1; a10,d2 a20,d2]
-  G(:,:,2)=[ 0.5884,  0.6450;  0.5038,  0.6643];
-else
-  % M(a10,d1)
-  M(:,:,1,1)=[0.200000 0.800000; 0.136364 0.863636];
-  % M(a10,d2)
-  M(:,:,1,2)=[0.333333 0.666667; 0.142857 0.857143];
-  % M(a20,d1)
-  M(:,:,2,1)=[0.500000 0.500000; 0.043478 0.956522];
-  % M(a20,d2)
-  M(:,:,2,2)=[0.571429 0.428571; 0.100000 0.900000];
-
-  % state s0: G(s0) = [a10,d1 a20,d1; a10,d2 a20,d2]
-  G(:,:,1)=[0 0; 0 0];
-  % state s1: G(s1) = [a10,d1 a20,d1; a10,d2 a20,d2]
-  G(:,:,2)=[0.668604 0.773476; 0.605829 0.823540];
+  % state s0: G(s0) = [a10,d1 a10,d2; a20,d1 a20,d2]
+  if ~zerogs0
+    G(:,:,1)=[-8.7894, -8.7672; -8.7606, -8.7602];
+  else
+    G(:,:,1)=[0, 0; 0, 0];
+  end
+  % state s1: G(s1) = [a10,d1 a10,d2; a20,d1 a20,d2]
+  G(:,:,2)=[ 0.5038,  0.5884;  0.6643,  0.6450];
 end
 
 
-[sim,cpu_time] = newsecgamesolve2(M,G,0.9);
+[sim,cpu_time] = newsecgamesolve2(M,G,alpha);
 %[dummy,x,y]=zerosumgamesolver1(G(:,:,1)); %no vuln
 %[dummy,xv,yv]=zerosumgamesolver1(G(:,:,2)); %vuln
 sim
@@ -77,7 +71,7 @@ sim.policy2'
 
 % % Display results
 
-figure(199)
+figure(299)
 % colormap(copper)
 % subplot(2,2,1)
 % bar([xv x])
@@ -98,11 +92,14 @@ figure(199)
 % subplot(2,2,3)
 colormap(copper)
 bar([sim.policy1 sim.policy2])
-title('Attack and Defense Strategies for Markov Game')
+%title('Attack and Defense Strategies for Markov Game')
 xlabel('Actions')
 set(gca,'XTickLabel',{'a10,d1','a20,d2'})
 ylabel('Probability')
-legend('Attacker','Defender')
+legend({'Attacker','Defender'},'location','north')
+set(gcf, 'units', 'normalized')
+set(gcf, 'position', [0.8, 0.7, 0.15, 0.2])
+set(gca, 'YGrid', 'on')
 
 % figure(1)
 % plot([sim.Jstore{1} sim.Jstore{2}]);
