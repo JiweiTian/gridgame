@@ -1,12 +1,12 @@
 Model {
-  Name			  "dstatcom_avg_bak5"
+  Name			  "dstatcom_avg"
   Version		  7.9
   MdlSubVersion		  0
   GraphicalInterface {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.809"
+    ComputedModelVersion    "1.814"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -35,9 +35,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "ywlaw"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Thu Sep 06 21:01:28 2012"
-  RTWModifiedTimeStamp	  268863569
-  ModelVersionFormat	  "1.%<AutoIncrement:809>"
+  LastModifiedDate	  "Fri Sep 07 10:56:23 2012"
+  RTWModifiedTimeStamp	  268914315
+  ModelVersionFormat	  "1.%<AutoIncrement:814>"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -121,7 +121,7 @@ Model {
 	  $ObjectID		  2
 	  Version		  "1.12.0"
 	  StartTime		  "0.0"
-	  StopTime		  "0.5"
+	  StopTime		  "3"
 	  AbsTol		  "auto"
 	  FixedStep		  "Ts"
 	  InitialStep		  "auto"
@@ -602,7 +602,7 @@ Model {
       }
       Name		      "Configuration"
       CurrentDlgPage	      "Solver"
-      ConfigPrmDlgPosition     [ 151, 166, 1660, 873 ] 
+      ConfigPrmDlgPosition     [ 143, 136, 1668, 881 ] 
     }
     PropName		    "ConfigurationSets"
   }
@@ -1001,8 +1001,8 @@ Model {
     }
   }
   System {
-    Name		    "dstatcom_avg_bak5"
-    Location		    [854, 82, 2027, 1021]
+    Name		    "dstatcom_avg"
+    Location		    [115, 82, 1288, 974]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -1238,7 +1238,7 @@ Model {
       BlockType		      From
       Name		      "3-ph sinusoid of 1 p.u."
       SID		      "1764"
-      Position		      [870, 821, 955, 839]
+      Position		      [540, 206, 625, 224]
       BlockMirror	      on
       BackgroundColor	      "green"
       ShowName		      off
@@ -1277,7 +1277,7 @@ Model {
       Name		      "Attacker"
       SID		      "1765"
       Ports		      [2, 1]
-      Position		      [765, 822, 835, 853]
+      Position		      [435, 207, 505, 238]
       BlockMirror	      on
       NamePlacement	      "alternate"
       ShowName		      off
@@ -1303,7 +1303,7 @@ Model {
       MaskIconRotate	      "none"
       MaskPortRotate	      "default"
       MaskIconUnits	      "autoscale"
-      MaskValueString	      "0.2|1.0|0"
+      MaskValueString	      "0.2|-0.8|0"
       System {
 	Name			"Attacker"
 	Location		[425, 458, 1531, 984]
@@ -1495,7 +1495,6 @@ Model {
 	Line {
 	  SrcBlock		  "Product"
 	  SrcPort		  1
-	  Points		  [0, 5]
 	  DstBlock		  "Sum"
 	  DstPort		  2
 	}
@@ -1606,6 +1605,7 @@ Model {
       Ports		      [0, 0, 0, 0, 0, 3, 3]
       Position		      [270, 114, 275, 166]
       ZOrder		      -8
+      BackgroundColor	      "black"
       LibraryVersion	      "1.2119"
       FontName		      "Verdana"
       FontSize		      11
@@ -1633,6 +1633,7 @@ Model {
       Ports		      [0, 0, 0, 0, 0, 3, 3]
       Position		      [400, 114, 405, 166]
       ZOrder		      -8
+      BackgroundColor	      "black"
       LibraryVersion	      "1.2119"
       FontName		      "Verdana"
       FontSize		      11
@@ -2187,11 +2188,9 @@ Model {
       Name		      "Bstatcom"
       SID		      "18"
       Ports		      [0, 0, 0, 0, 0, 3, 3]
-      Position		      [551, 200, 609, 205]
+      Position		      [552, 95, 608, 100]
       BlockRotation	      270
-      BlockMirror	      on
       BackgroundColor	      "black"
-      NamePlacement	      "alternate"
       LibraryVersion	      "1.2119"
       SourceBlock	      "powerlib/Measurements/Three-Phase\nV-I Measurement"
       SourceType	      "Three-Phase VI Measurement"
@@ -2222,11 +2221,11 @@ Model {
       Name		      "DStatcom"
       SID		      "19"
       Ports		      [0, 0, 0, 0, 0, 0, 3]
-      Position		      [546, 230, 614, 285]
+      Position		      [546, 15, 614, 70]
       BlockRotation	      270
+      BlockMirror	      on
       BackgroundColor	      "yellow"
       DropShadow	      on
-      NamePlacement	      "alternate"
       ShowName		      off
       FontWeight	      "bold"
       MinAlgLoopOccurrences   off
@@ -6772,7 +6771,7 @@ Model {
       BlockType		      DataStoreMemory
       Name		      "Data Store\nMemory"
       SID		      "1782"
-      Position		      [377, 841, 464, 860]
+      Position		      [47, 226, 134, 245]
       ZOrder		      -4
       ShowName		      off
       DataStoreName	      "attDetected"
@@ -6785,7 +6784,7 @@ Model {
       Name		      "Data Store\nRead"
       SID		      "1783"
       Ports		      [0, 1]
-      Position		      [870, 837, 945, 853]
+      Position		      [540, 222, 615, 238]
       ZOrder		      -5
       BlockMirror	      on
       NamePlacement	      "alternate"
@@ -6798,7 +6797,7 @@ Model {
       Name		      "Data Store\nWrite"
       SID		      "1784"
       Ports		      [1]
-      Position		      [495, 840, 580, 860]
+      Position		      [165, 225, 250, 245]
       ZOrder		      -6
       BlockMirror	      on
       NamePlacement	      "alternate"
@@ -6811,7 +6810,7 @@ Model {
       Name		      "Defender"
       SID		      "1785"
       Ports		      [1, 2]
-      Position		      [670, 812, 730, 863]
+      Position		      [340, 197, 400, 248]
       BlockMirror	      on
       ShowName		      off
       MinAlgLoopOccurrences   off
@@ -6908,7 +6907,7 @@ Model {
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
 	  ShowName		  off
-	  MATLABFcn		  "statcom_ids(u(1), u(2), u(3), u(4), u(5), u(6), u(7))"
+	  MATLABFcn		  "defender_statcom(u(1), u(2), u(3), u(4), u(5), u(6), u(7))"
 	  OutputDimensions	  "4"
 	}
 	Block {
@@ -7391,9 +7390,11 @@ Model {
       BlockType		      From
       Name		      "From8"
       SID		      "1705"
-      Position		      [421, 225, 429, 245]
+      Position		      [421, 50, 429, 70]
       ZOrder		      -9
       BlockRotation	      270
+      BlockMirror	      on
+      NamePlacement	      "alternate"
       ShowName		      off
       GotoTag		      "ld_shed0"
     }
@@ -7517,7 +7518,7 @@ Model {
       BlockType		      Goto
       Name		      "Goto8"
       SID		      "1797"
-      Position		      [495, 813, 630, 837]
+      Position		      [165, 198, 300, 222]
       ZOrder		      -10
       BlockMirror	      on
       BackgroundColor	      "green"
@@ -7563,9 +7564,9 @@ Model {
       Name		      "L0:\n3 MW\n0.2 MVAr"
       SID		      "13"
       Ports		      [0, 0, 0, 0, 0, 3]
-      Position		      [428, 230, 462, 270]
+      Position		      [428, 30, 462, 70]
       BlockRotation	      270
-      BlockMirror	      on
+      NamePlacement	      "alternate"
       AttributesFormatString  "\\n"
       LibraryVersion	      "1.2119"
       SourceBlock	      "powerlib/Elements/Three-Phase\nParallel RLC Load"
@@ -8729,7 +8730,7 @@ Model {
       Position		      [255, 441, 300, 544]
       BackgroundColor	      "green"
       Floating		      off
-      Location		      [5, 48, 1925, 1049]
+      Location		      [5, 43, 1689, 1044]
       Open		      off
       NumInputPorts	      "4"
       ZoomMode		      "yonly"
@@ -8790,8 +8791,8 @@ Model {
 	MarkerStyles		"none|none|none|none|none|none"
       }
       ShowLegends	      on
-      LegendLocations	      "0.87422     0.90582    0.081771    0.035964\n0.87552     0.55776    0.080729    0.067266\n"
-      "0.91003     0.28289    0.052604    0.035964"
+      LegendLocations	      "0.90226     0.92741    0.081771    0.035964\n 0.9033     0.57942    0.080729    0.067266\n"
+      "0.93168     0.29254    0.052604    0.035964"
       TimeRange		      "1"
       YMin		      "0~0.725~-3.5"
       YMax		      "6~1~3.5"
@@ -8836,6 +8837,7 @@ Model {
       Ports		      [1, 0, 0, 0, 0, 3, 3]
       Position		      [230, 104, 235, 161]
       ZOrder		      -26
+      BackgroundColor	      "black"
       ShowName		      off
       LibraryVersion	      "1.2119"
       FontName		      "Verdana"
@@ -8862,6 +8864,7 @@ Model {
       ZOrder		      -26
       BlockRotation	      270
       BlockMirror	      on
+      BackgroundColor	      "black"
       NamePlacement	      "alternate"
       ShowName		      off
       LibraryVersion	      "1.2119"
@@ -8889,6 +8892,7 @@ Model {
       ZOrder		      -26
       BlockRotation	      270
       BlockMirror	      on
+      BackgroundColor	      "black"
       NamePlacement	      "alternate"
       ShowName		      off
       LibraryVersion	      "1.2119"
@@ -8916,6 +8920,7 @@ Model {
       ZOrder		      -26
       BlockRotation	      270
       BlockMirror	      on
+      BackgroundColor	      "black"
       NamePlacement	      "alternate"
       ShowName		      off
       LibraryVersion	      "1.2119"
@@ -8942,6 +8947,7 @@ Model {
       Position		      [926, 175, 974, 180]
       ZOrder		      -26
       BlockRotation	      270
+      BackgroundColor	      "black"
       ShowName		      off
       LibraryVersion	      "1.2119"
       FontName		      "Verdana"
@@ -8967,6 +8973,7 @@ Model {
       Position		      [861, 175, 909, 180]
       ZOrder		      -26
       BlockRotation	      270
+      BackgroundColor	      "black"
       ShowName		      off
       LibraryVersion	      "1.2119"
       FontName		      "Verdana"
@@ -8992,6 +8999,7 @@ Model {
       Position		      [796, 175, 844, 180]
       ZOrder		      -26
       BlockRotation	      270
+      BackgroundColor	      "black"
       ShowName		      off
       LibraryVersion	      "1.2119"
       FontName		      "Verdana"
@@ -9014,9 +9022,12 @@ Model {
       Name		      "Three-Phase Breaker7"
       SID		      "1704"
       Ports		      [1, 0, 0, 0, 0, 3, 3]
-      Position		      [415, 200, 465, 205]
+      Position		      [415, 95, 465, 100]
       ZOrder		      -26
       BlockRotation	      270
+      BlockMirror	      on
+      BackgroundColor	      "black"
+      NamePlacement	      "alternate"
       ShowName		      off
       LibraryVersion	      "1.2119"
       FontName		      "Verdana"
@@ -9039,7 +9050,7 @@ Model {
       Name		      "Transport\nDelay"
       SID		      "1798"
       Ports		      [1, 1]
-      Position		      [600, 839, 630, 861]
+      Position		      [270, 224, 300, 246]
       ZOrder		      -10
       BlockMirror	      on
       NamePlacement	      "alternate"
@@ -10026,7 +10037,7 @@ Model {
       Name		      "powergui"
       SID		      "1195"
       Ports		      []
-      Position		      [16, 15, 105, 48]
+      Position		      [16, 30, 105, 63]
       DropShadow	      on
       ShowName		      off
       Priority		      "2"
@@ -10129,13 +10140,13 @@ Model {
     }
     Line {
       LineType		      "Connection"
-      SrcBlock		      "B3"
-      SrcPort		      LConn2
-      Points		      [-30, 0]
+      SrcBlock		      "2-km\n Feeder"
+      SrcPort		      RConn2
+      Points		      [30, 0]
       Branch {
 	ConnectType		"DEST_SRC"
-	DstBlock		"2-km\n Feeder"
-	DstPort			RConn2
+	DstBlock		"B3"
+	DstPort			LConn2
       }
       Branch {
 	ConnectType		"DEST_SRC"
@@ -10145,29 +10156,29 @@ Model {
     }
     Line {
       LineType		      "Connection"
-      SrcBlock		      "2-km\n Feeder"
-      SrcPort		      RConn1
-      Points		      [10, 0]
+      Points		      [560, 125; 20, 0; 30, 0]
+      DstBlock		      "B3"
+      DstPort		      LConn1
       Branch {
-	ConnectType		"DEST_SRC"
-	DstBlock		"B3"
-	DstPort			LConn1
+	ConnectType		"SRC_SRC"
+	DstBlock		"2-km\n Feeder"
+	DstPort			RConn1
       }
       Branch {
-	ConnectType		"DEST_SRC"
+	ConnectType		"SRC_SRC"
 	DstBlock		"Bstatcom"
 	DstPort			LConn1
       }
     }
     Line {
       LineType		      "Connection"
-      SrcBlock		      "B3"
-      SrcPort		      LConn3
-      Points		      [-10, 0]
+      SrcBlock		      "2-km\n Feeder"
+      SrcPort		      RConn3
+      Points		      [50, 0]
       Branch {
 	ConnectType		"DEST_SRC"
-	DstBlock		"2-km\n Feeder"
-	DstPort			RConn3
+	DstBlock		"B3"
+	DstPort			LConn3
       }
       Branch {
 	ConnectType		"DEST_SRC"
@@ -10240,58 +10251,37 @@ Model {
     }
     Line {
       LineType		      "Connection"
-      SrcBlock		      "2-km\n Feeder"
-      SrcPort		      LConn1
-      Points		      [-35, 0]
+      SrcBlock		      "B2"
+      SrcPort		      RConn1
+      Points		      [5, 0]
       Branch {
 	ConnectType		"DEST_SRC"
-	DstBlock		"B2"
-	DstPort			RConn1
+	DstBlock		"2-km\n Feeder"
+	DstPort			LConn1
       }
       Branch {
 	ConnectType		"DEST_DEST"
 	SrcBlock		"Three-Phase Breaker7"
 	SrcPort			RConn1
-	Points			[0, -60]
+	Points			[0, 10]
       }
     }
     Line {
       LineType		      "Connection"
-      SrcBlock		      "2-km\n Feeder"
-      SrcPort		      LConn2
-      Points		      [-20, 0]
+      SrcBlock		      "B2"
+      SrcPort		      RConn2
+      Points		      [20, 0]
       Branch {
 	ConnectType		"DEST_SRC"
-	DstBlock		"B2"
-	DstPort			RConn2
+	DstBlock		"2-km\n Feeder"
+	DstPort			LConn2
       }
       Branch {
 	ConnectType		"DEST_DEST"
 	SrcBlock		"Three-Phase Breaker7"
 	SrcPort			RConn2
-	Points			[0, -45]
+	Points			[0, 25]
       }
-    }
-    Line {
-      LineType		      "Connection"
-      SrcBlock		      "Bstatcom"
-      SrcPort		      RConn3
-      DstBlock		      "DStatcom"
-      DstPort		      RConn3
-    }
-    Line {
-      LineType		      "Connection"
-      SrcBlock		      "DStatcom"
-      SrcPort		      RConn1
-      DstBlock		      "Bstatcom"
-      DstPort		      RConn1
-    }
-    Line {
-      LineType		      "Connection"
-      SrcBlock		      "DStatcom"
-      SrcPort		      RConn2
-      DstBlock		      "Bstatcom"
-      DstPort		      RConn2
     }
     Line {
       LineType		      "Connection"
@@ -10502,19 +10492,19 @@ Model {
     }
     Line {
       LineType		      "Connection"
-      SrcBlock		      "2-km\n Feeder"
-      SrcPort		      LConn3
-      Points		      [-5, 0]
+      SrcBlock		      "B2"
+      SrcPort		      RConn3
+      Points		      [35, 0]
       Branch {
 	ConnectType		"DEST_SRC"
-	DstBlock		"B2"
-	DstPort			RConn3
+	DstBlock		"2-km\n Feeder"
+	DstPort			LConn3
       }
       Branch {
 	ConnectType		"DEST_DEST"
 	SrcBlock		"Three-Phase Breaker7"
 	SrcPort			RConn3
-	Points			[0, -30]
+	Points			[0, 40]
       }
     }
     Line {
@@ -10907,33 +10897,6 @@ Model {
       }
     }
     Line {
-      LineType		      "Connection"
-      SrcBlock		      "Three-Phase Breaker7"
-      SrcPort		      LConn1
-      DstBlock		      "L0:\n3 MW\n0.2 MVAr"
-      DstPort		      LConn1
-    }
-    Line {
-      LineType		      "Connection"
-      SrcBlock		      "Three-Phase Breaker7"
-      SrcPort		      LConn2
-      DstBlock		      "L0:\n3 MW\n0.2 MVAr"
-      DstPort		      LConn2
-    }
-    Line {
-      LineType		      "Connection"
-      SrcBlock		      "Three-Phase Breaker7"
-      SrcPort		      LConn3
-      DstBlock		      "L0:\n3 MW\n0.2 MVAr"
-      DstPort		      LConn3
-    }
-    Line {
-      SrcBlock		      "From8"
-      SrcPort		      1
-      DstBlock		      "Three-Phase Breaker7"
-      DstPort		      1
-    }
-    Line {
       SrcBlock		      "Tripper4"
       SrcPort		      1
       Points		      [25, 0]
@@ -11110,10 +11073,58 @@ Model {
       DstBlock		      "Transport\nDelay"
       DstPort		      1
     }
+    Line {
+      LineType		      "Connection"
+      SrcBlock		      "L0:\n3 MW\n0.2 MVAr"
+      SrcPort		      LConn1
+      DstBlock		      "Three-Phase Breaker7"
+      DstPort		      LConn1
+    }
+    Line {
+      LineType		      "Connection"
+      SrcBlock		      "L0:\n3 MW\n0.2 MVAr"
+      SrcPort		      LConn2
+      DstBlock		      "Three-Phase Breaker7"
+      DstPort		      LConn2
+    }
+    Line {
+      LineType		      "Connection"
+      SrcBlock		      "L0:\n3 MW\n0.2 MVAr"
+      SrcPort		      LConn3
+      DstBlock		      "Three-Phase Breaker7"
+      DstPort		      LConn3
+    }
+    Line {
+      SrcBlock		      "From8"
+      SrcPort		      1
+      DstBlock		      "Three-Phase Breaker7"
+      DstPort		      1
+    }
+    Line {
+      LineType		      "Connection"
+      SrcBlock		      "DStatcom"
+      SrcPort		      RConn1
+      DstBlock		      "Bstatcom"
+      DstPort		      RConn1
+    }
+    Line {
+      LineType		      "Connection"
+      SrcBlock		      "DStatcom"
+      SrcPort		      RConn2
+      DstBlock		      "Bstatcom"
+      DstPort		      RConn2
+    }
+    Line {
+      LineType		      "Connection"
+      SrcBlock		      "DStatcom"
+      SrcPort		      RConn3
+      DstBlock		      "Bstatcom"
+      DstPort		      RConn3
+    }
     Annotation {
       SID		      "305"
       Name		      "25-kV, +3/-3 Mvar Distribution STATCOM (Average Model)  "
-      Position		      [514, 22]
+      Position		      [224, 22]
       ForegroundColor	      "blue"
       FontName		      "Arial"
       FontSize		      14
@@ -11122,7 +11133,7 @@ Model {
     Annotation {
       SID		      "1196"
       Name		      "The 'InitFcn' automatically sets\n the sample time Ts= 40e-6 s"
-      Position		      [182, 32]
+      Position		      [182, 47]
     }
     Annotation {
       SID		      "1741"
