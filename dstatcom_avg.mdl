@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.814"
+    ComputedModelVersion    "1.882"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -23,7 +23,8 @@ Model {
   MinMaxOverflowArchiveMode "Overwrite"
   FPTRunName		  "Run 1"
   MaxMDLFileLineLength	  120
-  InitFcn		  "Ts=40e-6;\ntic;"
+  InitFcn		  "Ts=40e-6;\nglobal defenderInited attackerInited\ndefenderInited = false;\nattackerInited = false;\nset_p"
+  "aram('dstatcom_avg/game/meter_switch', 'sw', '1');\ntic;"
   StopFcn		  "toc;"
   UserBdParams		  "PhysicalModelingChecksum;PhysicalModelingParameterChecksum;PhysicalModelingProducts"
   PhysicalModelingChecksum "3072465496"
@@ -35,9 +36,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "ywlaw"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Fri Sep 07 10:56:23 2012"
-  RTWModifiedTimeStamp	  268914315
-  ModelVersionFormat	  "1.%<AutoIncrement:814>"
+  LastModifiedDate	  "Tue Sep 11 17:22:11 2012"
+  RTWModifiedTimeStamp	  269271428
+  ModelVersionFormat	  "1.%<AutoIncrement:882>"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -121,7 +122,7 @@ Model {
 	  $ObjectID		  2
 	  Version		  "1.12.0"
 	  StartTime		  "0.0"
-	  StopTime		  "3"
+	  StopTime		  "12"
 	  AbsTol		  "auto"
 	  FixedStep		  "Ts"
 	  InitialStep		  "auto"
@@ -602,7 +603,7 @@ Model {
       }
       Name		      "Configuration"
       CurrentDlgPage	      "Solver"
-      ConfigPrmDlgPosition     [ 143, 136, 1668, 881 ] 
+      ConfigPrmDlgPosition     [ 384, 132, 1297, 868 ] 
     }
     PropName		    "ConfigurationSets"
   }
@@ -660,40 +661,6 @@ Model {
       SampleTime	      "inf"
       FramePeriod	      "inf"
       PreserveConstantTs      off
-    }
-    Block {
-      BlockType		      DataStoreMemory
-      DataStoreName	      "A"
-      ReadBeforeWriteMsg      "none"
-      WriteAfterWriteMsg      "none"
-      WriteAfterReadMsg	      "none"
-      InitialValue	      "0"
-      StateMustResolveToSignalObject off
-      RTWStateStorageClass    "Auto"
-      VectorParams1D	      on
-      ShowAdditionalParam     off
-      OutMin		      "[]"
-      OutMax		      "[]"
-      OutDataTypeStr	      "Inherit: auto"
-      LockScale		      off
-      SignalType	      "auto"
-      Dimensions	      "-1"
-      DataLogging	      off
-      DataLoggingLimitDataPoints off
-      DataLoggingMaxPoints    "5000"
-      DataLoggingDecimateData off
-      DataLoggingDecimation   "2"
-      DataLoggingNameMode     "SignalName"
-    }
-    Block {
-      BlockType		      DataStoreRead
-      DataStoreName	      "A"
-      SampleTime	      "-1"
-    }
-    Block {
-      BlockType		      DataStoreWrite
-      DataStoreName	      "A"
-      SampleTime	      "-1"
     }
     Block {
       BlockType		      Demux
@@ -970,15 +937,6 @@ Model {
       BlockType		      Terminator
     }
     Block {
-      BlockType		      TransportDelay
-      DelayTime		      "1"
-      InitialOutput	      "0"
-      BufferSize	      "1024"
-      FixedBuffer	      off
-      TransDelayFeedthrough   off
-      PadeOrder		      "0"
-    }
-    Block {
       BlockType		      Trigonometry
       Operator		      "sin"
       ApproximationMethod     "None"
@@ -1002,7 +960,7 @@ Model {
   }
   System {
     Name		    "dstatcom_avg"
-    Location		    [115, 82, 1288, 974]
+    Location		    [262, 240, 1523, 986]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -1016,7 +974,7 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "1801"
+    SIDHighWatermark	    "1885"
     Block {
       BlockType		      SubSystem
       Name		      "2-km\n Feeder"
@@ -1237,13 +1195,12 @@ Model {
     Block {
       BlockType		      From
       Name		      "3-ph sinusoid of 1 p.u."
-      SID		      "1764"
-      Position		      [540, 206, 625, 224]
+      SID		      "1885"
+      Position		      [850, 367, 910, 383]
       BlockMirror	      on
-      BackgroundColor	      "green"
       ShowName		      off
       CloseFcn		      "tagdialog Close"
-      GotoTag		      "Vabc_Bstatcom"
+      GotoTag		      "attacked"
       TagVisibility	      "global"
     }
     Block {
@@ -1271,332 +1228,6 @@ Model {
       Setx0		      off
       InitialVoltage	      "0"
       Measurements	      "None"
-    }
-    Block {
-      BlockType		      SubSystem
-      Name		      "Attacker"
-      SID		      "1765"
-      Ports		      [2, 1]
-      Position		      [435, 207, 505, 238]
-      BlockMirror	      on
-      NamePlacement	      "alternate"
-      ShowName		      off
-      MinAlgLoopOccurrences   off
-      PropExecContextOutsideSubsystem off
-      RTWSystemCode	      "Auto"
-      FunctionWithSeparateData off
-      Opaque		      off
-      RequestExecContextInheritance off
-      MaskHideContents	      off
-      MaskType		      "Attacker"
-      MaskPromptString	      "Attack start time|Multiplier|Bias"
-      MaskStyleString	      "edit,edit,edit"
-      MaskVariables	      "startTime=@1;k=@2;b=@3;"
-      MaskTunableValueString  "on,on,on"
-      MaskCallbackString      "||"
-      MaskEnableString	      "on,on,on"
-      MaskVisibilityString    "on,on,on"
-      MaskToolTipString	      "on,on,on"
-      MaskDisplay	      "disp('Attacker')"
-      MaskIconFrame	      on
-      MaskIconOpaque	      on
-      MaskIconRotate	      "none"
-      MaskPortRotate	      "default"
-      MaskIconUnits	      "autoscale"
-      MaskValueString	      "0.2|-0.8|0"
-      System {
-	Name			"Attacker"
-	Location		[425, 458, 1531, 984]
-	Open			off
-	ModelBrowserVisibility	off
-	ModelBrowserWidth	200
-	ScreenColor		"white"
-	PaperOrientation	"landscape"
-	PaperPositionMode	"auto"
-	PaperType		"A4"
-	PaperUnits		"centimeters"
-	TiledPaperMargins	[1.270000, 1.270000, 1.270000, 1.270000]
-	TiledPageScale		1
-	ShowPageBoundaries	off
-	ZoomFactor		"100"
-	Block {
-	  BlockType		  Inport
-	  Name			  "Vin"
-	  SID			  "1766"
-	  Position		  [605, 73, 635, 87]
-	  BlockMirror		  on
-	  IconDisplay		  "Port number"
-	}
-	Block {
-	  BlockType		  Inport
-	  Name			  "attDetected"
-	  SID			  "1767"
-	  Position		  [370, 113, 400, 127]
-	  BlockMirror		  on
-	  Port			  "2"
-	  IconDisplay		  "Port number"
-	}
-	Block {
-	  BlockType		  Constant
-	  Name			  "Bias"
-	  SID			  "1768"
-	  Position		  [467, 25, 483, 45]
-	  ZOrder		  -4
-	  BlockRotation		  270
-	  BlockMirror		  on
-	  NamePlacement		  "alternate"
-	  Value			  "b"
-	}
-	Block {
-	  BlockType		  Clock
-	  Name			  "Clock3"
-	  SID			  "1769"
-	  Position		  [175, 142, 190, 158]
-	  BlockMirror		  on
-	  NamePlacement		  "alternate"
-	  ShowName		  off
-	}
-	Block {
-	  BlockType		  Constant
-	  Name			  "Constant 1"
-	  SID			  "1770"
-	  Position		  [465, 150, 490, 170]
-	  ZOrder		  -5
-	  BlockMirror		  on
-	  NamePlacement		  "alternate"
-	  ShowName		  off
-	  Value			  "0"
-	}
-	Block {
-	  BlockType		  Constant
-	  Name			  "Constant 12"
-	  SID			  "1771"
-	  Position		  [465, 90, 490, 110]
-	  ZOrder		  -5
-	  BlockMirror		  on
-	  NamePlacement		  "alternate"
-	  ShowName		  off
-	}
-	Block {
-	  BlockType		  Logic
-	  Name			  "Logical\nOperator"
-	  SID			  "1772"
-	  Ports			  [1, 1]
-	  Position		  [310, 110, 340, 130]
-	  ZOrder		  -17
-	  BlockMirror		  on
-	  NamePlacement		  "alternate"
-	  ShowName		  off
-	  Operator		  "NOT"
-	  AllPortsSameDT	  off
-	  OutDataTypeStr	  "boolean"
-	}
-	Block {
-	  BlockType		  Constant
-	  Name			  "Multiplier"
-	  SID			  "1773"
-	  Position		  [565, 56, 590, 74]
-	  ZOrder		  -4
-	  BlockMirror		  on
-	  NamePlacement		  "alternate"
-	  Value			  "k"
-	}
-	Block {
-	  BlockType		  Mux
-	  Name			  "Mux1"
-	  SID			  "1774"
-	  Ports			  [2, 1]
-	  Position		  [435, 124, 440, 171]
-	  ZOrder		  -12
-	  BlockMirror		  on
-	  NamePlacement		  "alternate"
-	  ShowName		  off
-	  Inputs		  "2"
-	  DisplayOption		  "bar"
-	}
-	Block {
-	  BlockType		  Mux
-	  Name			  "Mux3"
-	  SID			  "1775"
-	  Ports			  [2, 1]
-	  Position		  [435, 64, 440, 111]
-	  ZOrder		  -12
-	  BlockMirror		  on
-	  NamePlacement		  "alternate"
-	  ShowName		  off
-	  Inputs		  "2"
-	  DisplayOption		  "bar"
-	}
-	Block {
-	  BlockType		  Product
-	  Name			  "Product"
-	  SID			  "1776"
-	  Ports			  [2, 1]
-	  Position		  [505, 57, 535, 88]
-	  ZOrder		  -13
-	  BlockMirror		  on
-	  NamePlacement		  "alternate"
-	  InputSameDT		  off
-	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
-	  SaturateOnIntegerOverflow off
-	}
-	Block {
-	  BlockType		  Sum
-	  Name			  "Sum"
-	  SID			  "1777"
-	  Ports			  [2, 1]
-	  Position		  [465, 65, 485, 85]
-	  ZOrder		  -18
-	  BlockMirror		  on
-	  NamePlacement		  "alternate"
-	  ShowName		  off
-	  IconShape		  "round"
-	  Inputs		  "++|"
-	  InputSameDT		  off
-	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
-	  SaturateOnIntegerOverflow off
-	}
-	Block {
-	  BlockType		  Switch
-	  Name			  "Switch1"
-	  SID			  "1778"
-	  Position		  [215, 71, 280, 169]
-	  ZOrder		  -18
-	  BlockMirror		  on
-	  NamePlacement		  "alternate"
-	  ShowName		  off
-	  Criteria		  "u2 ~= 0"
-	  Threshold		  "startTime"
-	  InputSameDT		  off
-	  SaturateOnIntegerOverflow off
-	}
-	Block {
-	  BlockType		  Switch
-	  Name			  "Switch2"
-	  SID			  "1779"
-	  Position		  [95, 102, 155, 198]
-	  ZOrder		  -18
-	  BlockMirror		  on
-	  NamePlacement		  "alternate"
-	  ShowName		  off
-	  Criteria		  "u2 > Threshold"
-	  Threshold		  "startTime"
-	  InputSameDT		  off
-	  SaturateOnIntegerOverflow off
-	}
-	Block {
-	  BlockType		  Outport
-	  Name			  "Vout+flag"
-	  SID			  "1780"
-	  Position		  [35, 143, 65, 157]
-	  BlockMirror		  on
-	  IconDisplay		  "Port number"
-	}
-	Line {
-	  SrcBlock		  "Product"
-	  SrcPort		  1
-	  DstBlock		  "Sum"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Bias"
-	  SrcPort		  1
-	  DstBlock		  "Sum"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "Multiplier"
-	  SrcPort		  1
-	  DstBlock		  "Product"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "Vin"
-	  SrcPort		  1
-	  Points		  [-10, 0]
-	  Branch {
-	    DstBlock		    "Product"
-	    DstPort		    2
-	  }
-	  Branch {
-	    Points		    [0, 55]
-	    DstBlock		    "Mux1"
-	    DstPort		    1
-	  }
-	}
-	Line {
-	  SrcBlock		  "Clock3"
-	  SrcPort		  1
-	  DstBlock		  "Switch2"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Switch2"
-	  SrcPort		  1
-	  DstBlock		  "Vout+flag"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "Switch1"
-	  SrcPort		  1
-	  DstBlock		  "Switch2"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "Logical\nOperator"
-	  SrcPort		  1
-	  DstBlock		  "Switch1"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "attDetected"
-	  SrcPort		  1
-	  DstBlock		  "Logical\nOperator"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "Sum"
-	  SrcPort		  1
-	  DstBlock		  "Mux3"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "Constant 12"
-	  SrcPort		  1
-	  DstBlock		  "Mux3"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Mux3"
-	  SrcPort		  1
-	  DstBlock		  "Switch1"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "Constant 1"
-	  SrcPort		  1
-	  DstBlock		  "Mux1"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Mux1"
-	  SrcPort		  1
-	  Points		  [-10, 0]
-	  Branch {
-	    DstBlock		    "Switch1"
-	    DstPort		    3
-	  }
-	  Branch {
-	    Points		    [0, 30]
-	    DstBlock		    "Switch2"
-	    DstPort		    3
-	  }
-	}
-	Annotation {
-	  SID			  "1781"
-	  Position		  [476, 28]
-	}
-      }
     }
     Block {
       BlockType		      Reference
@@ -1659,7 +1290,7 @@ Model {
       Name		      "B2: Undervoltage\nrule 3"
       SID		      "1718"
       Ports		      [1, 1]
-      Position		      [480, 503, 530, 537]
+      Position		      [480, 483, 530, 517]
       MinAlgLoopOccurrences   off
       PropExecContextOutsideSubsystem off
       RTWSystemCode	      "Auto"
@@ -1832,7 +1463,7 @@ Model {
       Name		      "B4: Undervoltage\nrule 1"
       SID		      "1287"
       Ports		      [1, 1]
-      Position		      [480, 568, 530, 602]
+      Position		      [480, 548, 530, 582]
       MinAlgLoopOccurrences   off
       PropExecContextOutsideSubsystem off
       RTWSystemCode	      "Auto"
@@ -1954,7 +1585,7 @@ Model {
       Name		      "B4: Undervoltage\nrule 2"
       SID		      "1337"
       Ports		      [1, 1]
-      Position		      [480, 634, 530, 666]
+      Position		      [480, 614, 530, 646]
       MinAlgLoopOccurrences   off
       PropExecContextOutsideSubsystem off
       RTWSystemCode	      "Auto"
@@ -2071,7 +1702,7 @@ Model {
       Name		      "B4: Undervoltage\nrule 3"
       SID		      "1364"
       Ports		      [1, 1]
-      Position		      [480, 699, 530, 731]
+      Position		      [480, 679, 530, 711]
       MinAlgLoopOccurrences   off
       PropExecContextOutsideSubsystem off
       RTWSystemCode	      "Auto"
@@ -5929,7 +5560,7 @@ Model {
       }
       System {
 	Name			"Data Acquisition"
-	Location		[820, 433, 1765, 959]
+	Location		[131, 130, 1076, 656]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -6107,16 +5738,6 @@ Model {
 	  ShowName		  off
 	  CloseFcn		  "tagdialog Close"
 	  GotoTag		  "Iabc_B3"
-	  TagVisibility		  "global"
-	}
-	Block {
-	  BlockType		  Goto
-	  Name			  "Goto8"
-	  SID			  "1801"
-	  Position		  [340, 464, 425, 486]
-	  ZOrder		  -10
-	  ShowName		  off
-	  GotoTag		  "PQ_Bstatcom"
 	  TagVisibility		  "global"
 	}
 	Block {
@@ -6643,15 +6264,8 @@ Model {
 	Line {
 	  SrcBlock		  "pu->MVA"
 	  SrcPort		  1
-	  Points		  [0, 0]
-	  Branch {
-	    DstBlock		    "PQ"
-	    DstPort		    1
-	  }
-	  Branch {
-	    DstBlock		    "Goto8"
-	    DstPort		    1
-	  }
+	  DstBlock		  "PQ"
+	  DstPort		  1
 	}
 	Line {
 	  SrcBlock		  "From3"
@@ -6764,307 +6378,6 @@ Model {
 	  SID			  "319"
 	  Name			  "Intermediate output of STATCOM controller"
 	  Position		  [218, 383]
-	}
-      }
-    }
-    Block {
-      BlockType		      DataStoreMemory
-      Name		      "Data Store\nMemory"
-      SID		      "1782"
-      Position		      [47, 226, 134, 245]
-      ZOrder		      -4
-      ShowName		      off
-      DataStoreName	      "attDetected"
-      ReadBeforeWriteMsg      "warning"
-      WriteAfterWriteMsg      "warning"
-      WriteAfterReadMsg	      "warning"
-    }
-    Block {
-      BlockType		      DataStoreRead
-      Name		      "Data Store\nRead"
-      SID		      "1783"
-      Ports		      [0, 1]
-      Position		      [540, 222, 615, 238]
-      ZOrder		      -5
-      BlockMirror	      on
-      NamePlacement	      "alternate"
-      ShowName		      off
-      DataStoreName	      "attDetected"
-      SampleTime	      "Ts"
-    }
-    Block {
-      BlockType		      DataStoreWrite
-      Name		      "Data Store\nWrite"
-      SID		      "1784"
-      Ports		      [1]
-      Position		      [165, 225, 250, 245]
-      ZOrder		      -6
-      BlockMirror	      on
-      NamePlacement	      "alternate"
-      ShowName		      off
-      DataStoreName	      "attDetected"
-      SampleTime	      "Ts"
-    }
-    Block {
-      BlockType		      SubSystem
-      Name		      "Defender"
-      SID		      "1785"
-      Ports		      [1, 2]
-      Position		      [340, 197, 400, 248]
-      BlockMirror	      on
-      ShowName		      off
-      MinAlgLoopOccurrences   off
-      PropExecContextOutsideSubsystem off
-      RTWSystemCode	      "Auto"
-      FunctionWithSeparateData off
-      Opaque		      off
-      RequestExecContextInheritance off
-      MaskHideContents	      off
-      MaskDisplay	      "disp('Defender')"
-      MaskIconFrame	      on
-      MaskIconOpaque	      on
-      MaskIconRotate	      "none"
-      MaskPortRotate	      "default"
-      MaskIconUnits	      "autoscale"
-      System {
-	Name			"Defender"
-	Location		[504, 297, 1153, 711]
-	Open			off
-	ModelBrowserVisibility	off
-	ModelBrowserWidth	200
-	ScreenColor		"white"
-	PaperOrientation	"landscape"
-	PaperPositionMode	"auto"
-	PaperType		"A4"
-	PaperUnits		"centimeters"
-	TiledPaperMargins	[1.270000, 1.270000, 1.270000, 1.270000]
-	TiledPageScale		1
-	ShowPageBoundaries	off
-	ZoomFactor		"100"
-	Block {
-	  BlockType		  Inport
-	  Name			  "Vin+flag"
-	  SID			  "1786"
-	  Position		  [385, 108, 415, 122]
-	  ZOrder		  -1
-	  BlockMirror		  on
-	  NamePlacement		  "alternate"
-	  IconDisplay		  "Port number"
-	}
-	Block {
-	  BlockType		  Clock
-	  Name			  "Clock3"
-	  SID			  "1787"
-	  Position		  [295, 42, 310, 58]
-	  BlockMirror		  on
-	  NamePlacement		  "alternate"
-	  ShowName		  off
-	}
-	Block {
-	  BlockType		  Demux
-	  Name			  "Demux"
-	  SID			  "1788"
-	  Ports			  [1, 4]
-	  Position		  [335, 59, 340, 166]
-	  ZOrder		  -7
-	  BlockMirror		  on
-	  NamePlacement		  "alternate"
-	  ShowName		  off
-	  DisplayOption		  "bar"
-	}
-	Block {
-	  BlockType		  Demux
-	  Name			  "Demux1"
-	  SID			  "1789"
-	  Ports			  [1, 2]
-	  Position		  [295, 161, 300, 214]
-	  ZOrder		  -7
-	  BlockMirror		  on
-	  NamePlacement		  "alternate"
-	  ShowName		  off
-	  Outputs		  "2"
-	  DisplayOption		  "bar"
-	}
-	Block {
-	  BlockType		  Demux
-	  Name			  "Demux2"
-	  SID			  "1790"
-	  Ports			  [1, 4]
-	  Position		  [125, 88, 130, 157]
-	  ZOrder		  -7
-	  BlockMirror		  on
-	  NamePlacement		  "alternate"
-	  ShowName		  off
-	  DisplayOption		  "bar"
-	}
-	Block {
-	  BlockType		  MATLABFcn
-	  Name			  "Interpreted MATLAB\nFunction"
-	  SID			  "1791"
-	  Ports			  [1, 1]
-	  Position		  [160, 110, 230, 140]
-	  ZOrder		  -2
-	  BlockMirror		  on
-	  NamePlacement		  "alternate"
-	  ShowName		  off
-	  MATLABFcn		  "defender_statcom(u(1), u(2), u(3), u(4), u(5), u(6), u(7))"
-	  OutputDimensions	  "4"
-	}
-	Block {
-	  BlockType		  Mux
-	  Name			  "Mux1"
-	  SID			  "1792"
-	  Ports			  [3, 1]
-	  Position		  [85, 89, 90, 141]
-	  ZOrder		  -12
-	  BlockMirror		  on
-	  NamePlacement		  "alternate"
-	  ShowName		  off
-	  Inputs		  "3"
-	  DisplayOption		  "bar"
-	}
-	Block {
-	  BlockType		  Mux
-	  Name			  "Mux2"
-	  SID			  "1793"
-	  Ports			  [7, 1]
-	  Position		  [260, 28, 265, 222]
-	  ZOrder		  -12
-	  BlockMirror		  on
-	  NamePlacement		  "alternate"
-	  ShowName		  off
-	  Inputs		  "7"
-	  DisplayOption		  "bar"
-	}
-	Block {
-	  BlockType		  From
-	  Name			  "PQ_Bstatcom"
-	  SID			  "1794"
-	  Position		  [330, 179, 415, 201]
-	  BlockMirror		  on
-	  NamePlacement		  "alternate"
-	  ShowName		  off
-	  CloseFcn		  "tagdialog Close"
-	  GotoTag		  "PQ_Bstatcom"
-	  IconDisplay		  "Tag and signal name"
-	  TagVisibility		  "global"
-	}
-	Block {
-	  BlockType		  Outport
-	  Name			  "Vout"
-	  SID			  "1795"
-	  Position		  [20, 108, 50, 122]
-	  ZOrder		  -9
-	  BlockMirror		  on
-	  NamePlacement		  "alternate"
-	  IconDisplay		  "Port number"
-	}
-	Block {
-	  BlockType		  Outport
-	  Name			  "attDetected"
-	  SID			  "1796"
-	  Position		  [20, 138, 50, 152]
-	  ZOrder		  -9
-	  BlockMirror		  on
-	  NamePlacement		  "alternate"
-	  Port			  "2"
-	  IconDisplay		  "Port number"
-	}
-	Line {
-	  SrcBlock		  "Mux2"
-	  SrcPort		  1
-	  DstBlock		  "Interpreted MATLAB\nFunction"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "Clock3"
-	  SrcPort		  1
-	  DstBlock		  "Mux2"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "Vin+flag"
-	  SrcPort		  1
-	  DstBlock		  "Demux"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "Demux1"
-	  SrcPort		  1
-	  DstBlock		  "Mux2"
-	  DstPort		  6
-	}
-	Line {
-	  SrcBlock		  "Demux1"
-	  SrcPort		  2
-	  DstBlock		  "Mux2"
-	  DstPort		  7
-	}
-	Line {
-	  SrcBlock		  "PQ_Bstatcom"
-	  SrcPort		  1
-	  DstBlock		  "Demux1"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "Demux"
-	  SrcPort		  1
-	  DstBlock		  "Mux2"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Demux"
-	  SrcPort		  2
-	  DstBlock		  "Mux2"
-	  DstPort		  3
-	}
-	Line {
-	  SrcBlock		  "Demux"
-	  SrcPort		  3
-	  DstBlock		  "Mux2"
-	  DstPort		  4
-	}
-	Line {
-	  SrcBlock		  "Demux"
-	  SrcPort		  4
-	  DstBlock		  "Mux2"
-	  DstPort		  5
-	}
-	Line {
-	  SrcBlock		  "Interpreted MATLAB\nFunction"
-	  SrcPort		  1
-	  DstBlock		  "Demux2"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "Demux2"
-	  SrcPort		  1
-	  DstBlock		  "Mux1"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "Demux2"
-	  SrcPort		  2
-	  DstBlock		  "Mux1"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Demux2"
-	  SrcPort		  3
-	  DstBlock		  "Mux1"
-	  DstPort		  3
-	}
-	Line {
-	  SrcBlock		  "Mux1"
-	  SrcPort		  1
-	  DstBlock		  "Vout"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "Demux2"
-	  SrcPort		  4
-	  DstBlock		  "attDetected"
-	  DstPort		  1
 	}
       }
     }
@@ -7265,7 +6578,7 @@ Model {
       BlockType		      From
       Name		      "From"
       SID		      "788"
-      Position		      [355, 340, 440, 360]
+      Position		      [355, 320, 440, 340]
       ZOrder		      -9
       ShowName		      off
       GotoTag		      "Vabc_B1"
@@ -7284,7 +6597,7 @@ Model {
       BlockType		      From
       Name		      "From10"
       SID		      "1734"
-      Position		      [345, 510, 430, 530]
+      Position		      [345, 490, 430, 510]
       ZOrder		      -9
       ShowName		      off
       GotoTag		      "VmagB2"
@@ -7294,7 +6607,7 @@ Model {
       BlockType		      From
       Name		      "From11"
       SID		      "1735"
-      Position		      [345, 705, 430, 725]
+      Position		      [345, 685, 430, 705]
       ZOrder		      -9
       ShowName		      off
       GotoTag		      "VmagB4"
@@ -7443,7 +6756,7 @@ Model {
       BlockType		      Goto
       Name		      "Goto"
       SID		      "593"
-      Position		      [660, 340, 735, 360]
+      Position		      [660, 320, 735, 340]
       ZOrder		      -10
       ShowName		      off
       GotoTag		      "gen_trip"
@@ -7452,7 +6765,7 @@ Model {
       BlockType		      Goto
       Name		      "Goto1"
       SID		      "1430"
-      Position		      [785, 705, 860, 725]
+      Position		      [785, 685, 860, 705]
       ZOrder		      -10
       ShowName		      off
       GotoTag		      "ld_shed3"
@@ -7461,7 +6774,7 @@ Model {
       BlockType		      Goto
       Name		      "Goto2"
       SID		      "1706"
-      Position		      [785, 510, 860, 530]
+      Position		      [785, 490, 860, 510]
       ZOrder		      -10
       ShowName		      off
       GotoTag		      "ld_shed0"
@@ -7470,7 +6783,7 @@ Model {
       BlockType		      Goto
       Name		      "Goto3"
       SID		      "1456"
-      Position		      [785, 640, 860, 660]
+      Position		      [785, 620, 860, 640]
       ZOrder		      -10
       ShowName		      off
       GotoTag		      "ld_shed2"
@@ -7479,7 +6792,7 @@ Model {
       BlockType		      Goto
       Name		      "Goto4"
       SID		      "1484"
-      Position		      [785, 575, 860, 595]
+      Position		      [785, 555, 860, 575]
       ZOrder		      -10
       ShowName		      off
       GotoTag		      "ld_shed1"
@@ -7512,19 +6825,6 @@ Model {
       ZOrder		      -10
       ShowName		      off
       GotoTag		      "PQ_B4"
-      TagVisibility	      "global"
-    }
-    Block {
-      BlockType		      Goto
-      Name		      "Goto8"
-      SID		      "1797"
-      Position		      [165, 198, 300, 222]
-      ZOrder		      -10
-      BlockMirror	      on
-      BackgroundColor	      "green"
-      NamePlacement	      "alternate"
-      ShowName		      off
-      GotoTag		      "Vabc_Bstatcom_filtered"
       TagVisibility	      "global"
     }
     Block {
@@ -8447,7 +7747,7 @@ Model {
       Name		      "Logical\nOperator1"
       SID		      "1752"
       Ports		      [1, 1]
-      Position		      [795, 452, 820, 468]
+      Position		      [795, 432, 820, 448]
       ShowName		      off
       Operator		      "NOT"
       AllPortsSameDT	      off
@@ -8457,7 +7757,7 @@ Model {
       Name		      "Logical\nOperator2"
       SID		      "1751"
       Ports		      [1, 1]
-      Position		      [795, 437, 820, 453]
+      Position		      [795, 417, 820, 433]
       ShowName		      off
       Operator		      "NOT"
       AllPortsSameDT	      off
@@ -8467,7 +7767,7 @@ Model {
       Name		      "Logical\nOperator3"
       SID		      "1753"
       Ports		      [1, 1]
-      Position		      [795, 467, 820, 483]
+      Position		      [795, 447, 820, 463]
       ShowName		      off
       Operator		      "NOT"
       AllPortsSameDT	      off
@@ -8477,7 +7777,7 @@ Model {
       Name		      "Logical\nOperator4"
       SID		      "1754"
       Ports		      [1, 1]
-      Position		      [795, 482, 820, 498]
+      Position		      [795, 462, 820, 478]
       ShowName		      off
       Operator		      "NOT"
       AllPortsSameDT	      off
@@ -8487,7 +7787,7 @@ Model {
       Name		      "Logical\nOperator5"
       SID		      "1755"
       Ports		      [1, 1]
-      Position		      [795, 422, 820, 438]
+      Position		      [795, 402, 820, 418]
       ShowName		      off
       Operator		      "NOT"
       AllPortsSameDT	      off
@@ -8497,7 +7797,7 @@ Model {
       Name		      "Logical\nOperator6"
       SID		      "1757"
       Ports		      [5, 1]
-      Position		      [860, 422, 905, 498]
+      Position		      [860, 402, 905, 478]
       ShowName		      off
       Operator		      "OR"
       Inputs		      "5"
@@ -8508,7 +7808,7 @@ Model {
       Name		      "On/Off Delay"
       SID		      "1756"
       Ports		      [1, 1]
-      Position		      [935, 447, 980, 473]
+      Position		      [935, 427, 980, 453]
       ZOrder		      -10
       ShowName		      off
       LibraryVersion	      "1.648"
@@ -8525,7 +7825,7 @@ Model {
       Name		      "Overvoltage\nrule"
       SID		      "595"
       Ports		      [1, 1]
-      Position		      [480, 334, 530, 366]
+      Position		      [480, 314, 530, 346]
       MinAlgLoopOccurrences   off
       PropExecContextOutsideSubsystem off
       RTWSystemCode	      "Auto"
@@ -8770,7 +8070,7 @@ Model {
       Position		      [205, 543, 245, 617]
       BackgroundColor	      "green"
       Floating		      off
-      Location		      [5, 48, 1925, 1049]
+      Location		      [6, 71, 1286, 795]
       Open		      off
       NumInputPorts	      "3"
       ZoomMode		      "yonly"
@@ -8791,8 +8091,6 @@ Model {
 	MarkerStyles		"none|none|none|none|none|none"
       }
       ShowLegends	      on
-      LegendLocations	      "0.90226     0.92741    0.081771    0.035964\n 0.9033     0.57942    0.080729    0.067266\n"
-      "0.93168     0.29254    0.052604    0.035964"
       TimeRange		      "1"
       YMin		      "0~0.725~-3.5"
       YMax		      "6~1~3.5"
@@ -8819,7 +8117,7 @@ Model {
       BlockType		      Stop
       Name		      "Stop Simulation"
       SID		      "1762"
-      Position		      [1010, 442, 1045, 478]
+      Position		      [1010, 422, 1045, 458]
       ZOrder		      -4
       ShowName		      off
     }
@@ -9046,22 +8344,11 @@ Model {
       Measurements	      "None"
     }
     Block {
-      BlockType		      TransportDelay
-      Name		      "Transport\nDelay"
-      SID		      "1798"
-      Ports		      [1, 1]
-      Position		      [270, 224, 300, 246]
-      ZOrder		      -10
-      BlockMirror	      on
-      NamePlacement	      "alternate"
-      ShowName		      off
-    }
-    Block {
       BlockType		      Scope
       Name		      "Trip signals"
       SID		      "1518"
       Ports		      [5]
-      Position		      [555, 385, 605, 405]
+      Position		      [555, 365, 605, 385]
       BlockRotation	      270
       BackgroundColor	      "green"
       Floating		      off
@@ -9100,14 +8387,14 @@ Model {
       BlockType		      Scope
       Name		      "Trip signals1"
       SID		      "1703"
-      Ports		      [5]
-      Position		      [710, 385, 760, 405]
+      Ports		      [6]
+      Position		      [715, 365, 765, 385]
       BlockRotation	      270
       BackgroundColor	      "green"
       Floating		      off
-      Location		      [6, 46, 1686, 1019]
+      Location		      [5, 45, 1685, 1019]
       Open		      off
-      NumInputPorts	      "5"
+      NumInputPorts	      "6"
       ZoomMode		      "yonly"
       List {
 	ListType		AxesTitles
@@ -9116,6 +8403,7 @@ Model {
 	axes3			"%<SignalLabel>"
 	axes4			"%<SignalLabel>"
 	axes5			"%<SignalLabel>"
+	axes6			"%<SignalLabel>"
       }
       List {
 	ListType		ScopeGraphics
@@ -9128,9 +8416,12 @@ Model {
 	MarkerStyles		"none|none|none|none|none|none"
       }
       ShowLegends	      on
+      LegendLocations	      "0.92788      0.9409    0.054167    0.020876\n0.92431      0.7816    0.057738    0.020876\n"
+      "0.92431     0.62333    0.057738    0.020876\n0.92431     0.46506    0.057738    0.020876\n0.92431     0.30678   "
+      " 0.057738    0.020876\n0.88562     0.14851    0.096429    0.020876"
       TimeRange		      "0.5"
-      YMin		      "0~-5~-5~-5~-5"
-      YMax		      "6~5~5~5~5"
+      YMin		      "0~-5~-5~-5~-5~-0.5"
+      YMax		      "6~5~5~5~5~1.5"
       SaveName		      "Sig11"
       DataFormat	      "StructureWithTime"
       LimitDataPoints	      off
@@ -9142,7 +8433,7 @@ Model {
       Name		      "Tripper"
       SID		      "1333"
       Ports		      [1, 1]
-      Position		      [565, 334, 625, 366]
+      Position		      [565, 314, 625, 346]
       MinAlgLoopOccurrences   off
       PropExecContextOutsideSubsystem off
       RTWSystemCode	      "Auto"
@@ -9321,7 +8612,7 @@ Model {
       Name		      "Tripper1"
       SID		      "1419"
       Ports		      [1, 1]
-      Position		      [635, 569, 695, 601]
+      Position		      [635, 549, 695, 581]
       MinAlgLoopOccurrences   off
       PropExecContextOutsideSubsystem off
       RTWSystemCode	      "Auto"
@@ -9500,7 +8791,7 @@ Model {
       Name		      "Tripper2"
       SID		      "1432"
       Ports		      [1, 1]
-      Position		      [635, 634, 695, 666]
+      Position		      [635, 614, 695, 646]
       MinAlgLoopOccurrences   off
       PropExecContextOutsideSubsystem off
       RTWSystemCode	      "Auto"
@@ -9679,7 +8970,7 @@ Model {
       Name		      "Tripper3"
       SID		      "1445"
       Ports		      [1, 1]
-      Position		      [635, 699, 695, 731]
+      Position		      [635, 679, 695, 711]
       MinAlgLoopOccurrences   off
       PropExecContextOutsideSubsystem off
       RTWSystemCode	      "Auto"
@@ -9858,7 +9149,7 @@ Model {
       Name		      "Tripper4"
       SID		      "1707"
       Ports		      [1, 1]
-      Position		      [635, 504, 695, 536]
+      Position		      [635, 484, 695, 516]
       MinAlgLoopOccurrences   off
       PropExecContextOutsideSubsystem off
       RTWSystemCode	      "Auto"
@@ -10029,6 +9320,496 @@ Model {
 	  SrcPort		  1
 	  DstBlock		  "Trip"
 	  DstPort		  1
+	}
+      }
+    }
+    Block {
+      BlockType		      SubSystem
+      Name		      "game"
+      SID		      "1842"
+      Ports		      []
+      Position		      [637, 15, 711, 72]
+      BlockMirror	      on
+      BackgroundColor	      "yellow"
+      DropShadow	      on
+      ShowName		      off
+      MinAlgLoopOccurrences   off
+      PropExecContextOutsideSubsystem off
+      RTWSystemCode	      "Auto"
+      FunctionWithSeparateData off
+      Opaque		      off
+      RequestExecContextInheritance off
+      MaskHideContents	      off
+      MaskDisplay	      "disp('Security game')"
+      MaskIconFrame	      on
+      MaskIconOpaque	      on
+      MaskIconRotate	      "none"
+      MaskPortRotate	      "default"
+      MaskIconUnits	      "autoscale"
+      System {
+	Name			"game"
+	Location		[198, 307, 1317, 675]
+	Open			off
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"A4"
+	PaperUnits		"centimeters"
+	TiledPaperMargins	[1.270000, 1.270000, 1.270000, 1.270000]
+	TiledPageScale		1
+	ShowPageBoundaries	off
+	ZoomFactor		"100"
+	Block {
+	  BlockType		  From
+	  Name			  "3-ph sinusoid of 1 p.u."
+	  SID			  "1844"
+	  Position		  [1000, 141, 1085, 159]
+	  BlockMirror		  on
+	  BackgroundColor	  "green"
+	  ShowName		  off
+	  CloseFcn		  "tagdialog Close"
+	  GotoTag		  "Vabc_Bstatcom"
+	  TagVisibility		  "global"
+	}
+	Block {
+	  BlockType		  Clock
+	  Name			  "Clock1"
+	  SID			  "1880"
+	  Position		  [872, 110, 888, 125]
+	  BlockRotation		  270
+	  ShowName		  off
+	}
+	Block {
+	  BlockType		  Clock
+	  Name			  "Clock2"
+	  SID			  "1850"
+	  Position		  [755, 62, 770, 78]
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  ShowName		  off
+	}
+	Block {
+	  BlockType		  Clock
+	  Name			  "Clock3"
+	  SID			  "1835"
+	  Position		  [205, 132, 220, 148]
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  ShowName		  off
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant 12"
+	  SID			  "1853"
+	  Position		  [815, 40, 840, 60]
+	  ZOrder		  -5
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  ShowName		  off
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant 2"
+	  SID			  "1869"
+	  Position		  [815, 155, 840, 175]
+	  ZOrder		  -5
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  ShowName		  off
+	  Value			  "0"
+	}
+	Block {
+	  BlockType		  Demux
+	  Name			  "Demux"
+	  SID			  "1854"
+	  Ports			  [1, 4]
+	  Position		  [510, 113, 515, 187]
+	  ZOrder		  -7
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  ShowName		  off
+	  DisplayOption		  "bar"
+	}
+	Block {
+	  BlockType		  Demux
+	  Name			  "Demux1"
+	  SID			  "1879"
+	  Ports			  [1, 3]
+	  Position		  [901, 115, 1019, 120]
+	  ZOrder		  -7
+	  BlockRotation		  270
+	  ShowName		  off
+	  Outputs		  "3"
+	  DisplayOption		  "bar"
+	}
+	Block {
+	  BlockType		  From
+	  Name			  "From14"
+	  SID			  "1836"
+	  Position		  [205, 248, 270, 272]
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  ShowName		  off
+	  CloseFcn		  "tagdialog Close"
+	  GotoTag		  "Iqref"
+	  TagVisibility		  "global"
+	}
+	Block {
+	  BlockType		  From
+	  Name			  "From15"
+	  SID			  "1837"
+	  Position		  [260, 208, 325, 232]
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  ShowName		  off
+	  CloseFcn		  "tagdialog Close"
+	  GotoTag		  "IdIq"
+	  TagVisibility		  "global"
+	}
+	Block {
+	  BlockType		  Goto
+	  Name			  "Goto1"
+	  SID			  "1884"
+	  Position		  [290, 151, 425, 169]
+	  ZOrder		  -10
+	  BlockMirror		  on
+	  BackgroundColor	  "green"
+	  NamePlacement		  "alternate"
+	  ShowName		  off
+	  GotoTag		  "attacked"
+	  TagVisibility		  "global"
+	}
+	Block {
+	  BlockType		  Goto
+	  Name			  "Goto8"
+	  SID			  "1845"
+	  Position		  [290, 131, 425, 149]
+	  ZOrder		  -10
+	  BlockMirror		  on
+	  BackgroundColor	  "green"
+	  NamePlacement		  "alternate"
+	  ShowName		  off
+	  GotoTag		  "Vabc_Bstatcom_filtered"
+	  TagVisibility		  "global"
+	}
+	Block {
+	  BlockType		  MATLABFcn
+	  Name			  "Interpreted MATLAB\nFunction"
+	  SID			  "1838"
+	  Ports			  [1]
+	  Position		  [45, 185, 115, 215]
+	  ZOrder		  -2
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  ShowName		  off
+	  MATLABFcn		  "defender_statcom(u(1), u(2), u(3), u(4))"
+	  OutputDimensions	  "0"
+	  MaskDisplay		  "disp('Defender')"
+	  MaskIconFrame		  on
+	  MaskIconOpaque	  on
+	  MaskIconRotate	  "none"
+	  MaskPortRotate	  "default"
+	  MaskIconUnits		  "autoscale"
+	}
+	Block {
+	  BlockType		  MATLABFcn
+	  Name			  "Interpreted MATLAB\nFunction1"
+	  SID			  "1871"
+	  Ports			  [1, 1]
+	  Position		  [815, 14, 885, 36]
+	  ZOrder		  -2
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  ShowName		  off
+	  MATLABFcn		  "attacker_statcom(u(1), u(2), u(3), u(4))"
+	  OutputDimensions	  "3"
+	  Output1D		  off
+	  MaskDisplay		  "disp('Attacker')"
+	  MaskIconFrame		  on
+	  MaskIconOpaque	  on
+	  MaskIconRotate	  "none"
+	  MaskPortRotate	  "default"
+	  MaskIconUnits		  "autoscale"
+	}
+	Block {
+	  BlockType		  Mux
+	  Name			  "Mux1"
+	  SID			  "1878"
+	  Ports			  [4, 1]
+	  Position		  [860, 75, 1020, 80]
+	  ZOrder		  -12
+	  BlockRotation		  270
+	  ShowName		  off
+	  DisplayOption		  "bar"
+	}
+	Block {
+	  BlockType		  Mux
+	  Name			  "Mux2"
+	  SID			  "1839"
+	  Ports			  [4, 1]
+	  Position		  [155, 120, 160, 280]
+	  ZOrder		  -12
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  ShowName		  off
+	  DisplayOption		  "bar"
+	}
+	Block {
+	  BlockType		  Mux
+	  Name			  "Mux3"
+	  SID			  "1859"
+	  Ports			  [2, 1]
+	  Position		  [785, 14, 790, 61]
+	  ZOrder		  -12
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  ShowName		  off
+	  Inputs		  "2"
+	  DisplayOption		  "bar"
+	}
+	Block {
+	  BlockType		  Mux
+	  Name			  "Mux4"
+	  SID			  "1860"
+	  Ports			  [3, 1]
+	  Position		  [470, 112, 475, 168]
+	  ZOrder		  -12
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  ShowName		  off
+	  Inputs		  "3"
+	  DisplayOption		  "bar"
+	}
+	Block {
+	  BlockType		  Mux
+	  Name			  "Mux5"
+	  SID			  "1870"
+	  Ports			  [2, 1]
+	  Position		  [785, 143, 790, 172]
+	  ZOrder		  -12
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  ShowName		  off
+	  Inputs		  "2"
+	  DisplayOption		  "bar"
+	}
+	Block {
+	  BlockType		  Selector
+	  Name			  "Selector2"
+	  SID			  "1840"
+	  Ports			  [1, 1]
+	  Position		  [205, 204, 230, 236]
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  ShowName		  off
+	  InputPortWidth	  "2"
+	  IndexOptions		  "Index vector (dialog)"
+	  Indices		  "2"
+	  OutputSizes		  "1"
+	}
+	Block {
+	  BlockType		  Switch
+	  Name			  "Switch2"
+	  SID			  "1865"
+	  Position		  [650, 22, 730, 118]
+	  ZOrder		  -18
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  ShowName		  off
+	  Threshold		  "0.2"
+	  InputSameDT		  off
+	  SaturateOnIntegerOverflow off
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "meter_switch"
+	  SID			  "1846"
+	  Ports			  [2, 1]
+	  Position		  [560, 132, 590, 168]
+	  ZOrder		  -13
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  LibraryVersion	  "1.260"
+	  SourceBlock		  "simulink/Signal\nRouting/Manual Switch"
+	  SourceType		  "Manual Switch"
+	  sw			  "1"
+	  action		  "0"
+	  varsize		  off
+	}
+	Line {
+	  SrcBlock		  "Mux2"
+	  SrcPort		  1
+	  DstBlock		  "Interpreted MATLAB\nFunction"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Clock3"
+	  SrcPort		  1
+	  DstBlock		  "Mux2"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "From15"
+	  SrcPort		  1
+	  DstBlock		  "Selector2"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "From14"
+	  SrcPort		  1
+	  DstBlock		  "Mux2"
+	  DstPort		  4
+	}
+	Line {
+	  SrcBlock		  "Selector2"
+	  SrcPort		  1
+	  DstBlock		  "Mux2"
+	  DstPort		  3
+	}
+	Line {
+	  SrcBlock		  "Clock2"
+	  SrcPort		  1
+	  DstBlock		  "Switch2"
+	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "Interpreted MATLAB\nFunction1"
+	  SrcPort		  1
+	  DstBlock		  "Mux3"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Constant 12"
+	  SrcPort		  1
+	  DstBlock		  "Mux3"
+	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "Demux"
+	  SrcPort		  4
+	  Points		  [-55, 0]
+	  Branch {
+	    DstBlock		    "Mux2"
+	    DstPort		    2
+	  }
+	  Branch {
+	    Points		    [0, -20]
+	    DstBlock		    "Goto1"
+	    DstPort		    1
+	  }
+	}
+	Line {
+	  SrcBlock		  "Demux"
+	  SrcPort		  1
+	  DstBlock		  "Mux4"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Demux"
+	  SrcPort		  2
+	  DstBlock		  "Mux4"
+	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "Demux"
+	  SrcPort		  3
+	  DstBlock		  "Mux4"
+	  DstPort		  3
+	}
+	Line {
+	  SrcBlock		  "Mux4"
+	  SrcPort		  1
+	  DstBlock		  "Goto8"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Constant 2"
+	  SrcPort		  1
+	  DstBlock		  "Mux5"
+	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "3-ph sinusoid of 1 p.u."
+	  SrcPort		  1
+	  Points		  [-35, 0]
+	  Branch {
+	    DstBlock		    "Mux5"
+	    DstPort		    1
+	  }
+	  Branch {
+	    DstBlock		    "Demux1"
+	    DstPort		    1
+	  }
+	}
+	Line {
+	  SrcBlock		  "meter_switch"
+	  SrcPort		  1
+	  DstBlock		  "Demux"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Mux5"
+	  SrcPort		  1
+	  Points		  [-20, 0]
+	  Branch {
+	    DstBlock		    "meter_switch"
+	    DstPort		    2
+	  }
+	  Branch {
+	    Points		    [0, -60]
+	    DstBlock		    "Switch2"
+	    DstPort		    3
+	  }
+	}
+	Line {
+	  SrcBlock		  "Switch2"
+	  SrcPort		  1
+	  Points		  [-10, 0; 0, 70]
+	  DstBlock		  "meter_switch"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Mux3"
+	  SrcPort		  1
+	  DstBlock		  "Switch2"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Clock1"
+	  SrcPort		  1
+	  DstBlock		  "Mux1"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Demux1"
+	  SrcPort		  1
+	  DstBlock		  "Mux1"
+	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "Demux1"
+	  SrcPort		  2
+	  DstBlock		  "Mux1"
+	  DstPort		  3
+	}
+	Line {
+	  SrcBlock		  "Demux1"
+	  SrcPort		  3
+	  DstBlock		  "Mux1"
+	  DstPort		  4
+	}
+	Line {
+	  SrcBlock		  "Mux1"
+	  SrcPort		  1
+	  Points		  [0, -45]
+	  DstBlock		  "Interpreted MATLAB\nFunction1"
+	  DstPort		  1
+	}
+	Annotation {
+	  SID			  "1875"
+	  Position		  [864, 22]
 	}
       }
     }
@@ -11038,42 +10819,6 @@ Model {
       DstPort		      1
     }
     Line {
-      SrcBlock		      "Transport\nDelay"
-      SrcPort		      1
-      DstBlock		      "Data Store\nWrite"
-      DstPort		      1
-    }
-    Line {
-      SrcBlock		      "3-ph sinusoid of 1 p.u."
-      SrcPort		      1
-      DstBlock		      "Attacker"
-      DstPort		      1
-    }
-    Line {
-      SrcBlock		      "Data Store\nRead"
-      SrcPort		      1
-      DstBlock		      "Attacker"
-      DstPort		      2
-    }
-    Line {
-      SrcBlock		      "Attacker"
-      SrcPort		      1
-      DstBlock		      "Defender"
-      DstPort		      1
-    }
-    Line {
-      SrcBlock		      "Defender"
-      SrcPort		      1
-      DstBlock		      "Goto8"
-      DstPort		      1
-    }
-    Line {
-      SrcBlock		      "Defender"
-      SrcPort		      2
-      DstBlock		      "Transport\nDelay"
-      DstPort		      1
-    }
-    Line {
       LineType		      "Connection"
       SrcBlock		      "L0:\n3 MW\n0.2 MVAr"
       SrcPort		      LConn1
@@ -11121,6 +10866,13 @@ Model {
       DstBlock		      "Bstatcom"
       DstPort		      RConn3
     }
+    Line {
+      SrcBlock		      "3-ph sinusoid of 1 p.u."
+      SrcPort		      1
+      Points		      [0, 25]
+      DstBlock		      "Trip signals1"
+      DstPort		      6
+    }
     Annotation {
       SID		      "305"
       Name		      "25-kV, +3/-3 Mvar Distribution STATCOM (Average Model)  "
@@ -11137,7 +10889,7 @@ Model {
     }
     Annotation {
       SID		      "1741"
-      Position		      [726, 395]
+      Position		      [726, 375]
     }
     Annotation {
       SID		      "1763"
