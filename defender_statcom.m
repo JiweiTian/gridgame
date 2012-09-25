@@ -1,22 +1,34 @@
 % Taking input parameters from a mask will screw up your output
-function attDetected = defender_statcom(t, flag, iq, iqref)
+function defender_statcom(t, flag, iq, iqref, loadShed)
 
-global defenderInited
-persistent twindow timeout zcThresh fftThresh
+global defenderInited attDetected currMeter
+persistent action twindow timer zcThresh
+% persistent fftThresh1 fftThresh2
 persistent tbuf fbuf dbuf
 
-disabled = true;
-attDetected = 0;
+disabled = false;
 
-if t < 0.2 || disabled
+if t < 0.5 || disabled
   return
 end
 
 if ~defenderInited
-  twindow = 0.5;
-  timeout = 0.2 + twindow;
-  zcThresh = 10;
-  fftThresh = 0.2;
+  twindow = 0.50; 
+  action = 1; % CHANGE ME
+  switch action
+    case 1
+      zcThresh = 11;
+      %zcThresh = 42;
+    case 2
+      zcThresh = 12;
+      %zcThresh = 49;
+  end
+  % fftThresh1 = 10; fftThresh2 = 0.15;
+  timer = 0.5 + twindow;
+  tbuf = [];
+  fbuf = [];
+  dbuf = [];
+  fprintf('[%.4f] %d: session begin\n', t, currMeter);
   defenderInited = true;
 end
 
@@ -24,43 +36,39 @@ tbuf = [tbuf, t];
 fbuf = [fbuf, flag];
 dbuf = [dbuf, iq-iqref];
 
-if t >= timeout
+if t >= timer
   nCrossings = countcrossing(dbuf);
-  fprintf('nCrossings=%d vs %d\n', nCrossings, zcThresh)
   % rapid oscillations indicate k->-1.2
-  if nCrossings > zcThresh
-    attDetected = 1;
-  % else we need to look at how sinuisoidal dbuf samples are
-  else
-    L = numel(dbuf);
-    %Fs = 1/mean(tbuf(2:L)-tbuf(1:(L-1)));
-    NFFT = 2^nextpow2(L); % Next power of 2 from length of y
-    Y = fft(dbuf,NFFT)/L;
-    absY = 2*abs(Y(1:NFFT/2+1));
-    %f = Fs/2*linspace(0,1,NFFT/2+1);
-    [maxY, ~] = max(absY);
-    howSinusoidal = maxY/sum(absY);
-    fprintf('howSinusoidal=%f vs %f\n', howSinusoidal, fftThresh);
-    if howSinusoidal > fftThresh
-      % very sinusoidal
-      attDetected = 1;
-    else
-      % not very sinusoidal
-      attDetected = 0;
-    end
+  if nCrossings >= zcThresh
+    attDetected = true;
+  % % else we need to look at how sinuisoidal dbuf samples are
+  % else
+  %   L = numel(dbuf);
+  %   %Fs = 1/mean(tbuf(2:L)-tbuf(1:(L-1)));
+  %   NFFT = 2^nextpow2(L); % Next power of 2 from length of y
+  %   Y = fft(dbuf,NFFT)/L;
+  %   absY = 2*abs(Y(1:NFFT/2+1));
+  %   f = Fs/2*linspace(0,1,NFFT/2+1);
+  %   [maxY, maxI] = max(absY);
+  %   powRatio = maxY/sum(absY);
+  %   fprintf('freq(maxI)=%f vs %f | powRatio=%f vs %f\n', ...
+  %     f(maxI), fftThresh1, powRatio, fftThresh2);
+  %   if f(maxI) >= fftThresh1 || powRatio >= fftThresh2
+  %     attDetected = true;
+  %   end
   end
-  % attDetected = (sum(fbuf) == numel(fbuf)); % only for testing
+  % attDetected = (sum(fbuf)==numel(fbuf)); % ONLY FOR TESTING
   tbuf = [];
   fbuf = [];
   dbuf = [];
-  timeout = t + twindow;
+  timer = t + twindow;
+  fprintf('[%.4f] %d: session end/begin\n', t, currMeter);
 end
 
 if attDetected
-  set_param('dstatcom_avg/game/meter_switch', 'sw', '1');
   if ~flag
-    fprintf('t=%f: false positive\n', t)
+    fprintf('[%.4f] %d: false positive\n', t, currMeter)
   else
-    fprintf('t=%f: attack detected\n', t)
+    fprintf('[%.4f] %d: attack detected: nCrossings=%d >= %d\n', t, currMeter, nCrossings, zcThresh)
   end
 end
