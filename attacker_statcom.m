@@ -1,12 +1,21 @@
 function out = attacker_statcom(id, t, vina, vinb, vinc)
 
 global attackerInited hacked currMeter
-persistent kvec b howLongToHack timer
+persistent action kvec b howLongToHack timer
 
 if ~attackerInited
-  kvec = [1.1];
+  action = 1; % CHANGE ME
+  switch action
+    case 1
+      kvec = [1.1];
+    case 2
+      kvec = [1.2];
+    otherwise
+      kvec = [-0.8];
+  end
   b = 0;
-  howLongToHack = 0.2;
+  howLongToHack = 0.5;
+  % howLongToHack = 0.01;
   timer = -1;
   attackerInited = true;
 end
@@ -15,12 +24,12 @@ if currMeter == id && ~hacked(id)
   if timer < 0
     % start hacking
     timer = t + howLongToHack;
-    fprintf('[%.4f] start hacking %d\n', t, id);
+    fprintf('[%.4f] %d: begin hacking\n', t, id);
   elseif timer > 0 && t >= timer
     % finish hacking
     timer = -1;
     hacked(id) = true;
-    fprintf('[%.4f] finish hacking %d\n', t, id);
+    fprintf('[%.4f] %d: done hacking\n', t, id);
   end
 end
 
