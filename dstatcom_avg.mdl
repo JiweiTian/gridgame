@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.976"
+    ComputedModelVersion    "1.1003"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -26,8 +26,8 @@ Model {
   InitFcn		  "dstatcom_avg_init"
   StopFcn		  "toc;"
   UserBdParams		  "PhysicalModelingChecksum;PhysicalModelingParameterChecksum;PhysicalModelingProducts"
-  PhysicalModelingChecksum "4179555569"
-  PhysicalModelingParameterChecksum "4089876133"
+  PhysicalModelingChecksum "630731193"
+  PhysicalModelingParameterChecksum "3089923899"
   PhysicalModelingProducts "Power_System_Blocks"
   Created		  "Thu Sep 30 16:43:56 1999"
   Creator		  "MathWorks"
@@ -35,9 +35,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "ywlaw"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Tue Sep 18 23:52:46 2012"
-  RTWModifiedTimeStamp	  269912148
-  ModelVersionFormat	  "1.%<AutoIncrement:976>"
+  LastModifiedDate	  "Thu Sep 27 13:53:56 2012"
+  RTWModifiedTimeStamp	  270593201
+  ModelVersionFormat	  "1.%<AutoIncrement:1003>"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -668,6 +668,10 @@ Model {
       BusSelectionMode	      off
     }
     Block {
+      BlockType		      DigitalClock
+      SampleTime	      "1"
+    }
+    Block {
       BlockType		      DiscreteIntegrator
       IntegratorMethod	      "Integration: Forward Euler"
       gainval		      "1.0"
@@ -880,6 +884,15 @@ Model {
       SampleTime	      "-1"
     }
     Block {
+      BlockType		      Step
+      Time		      "1"
+      Before		      "0"
+      After		      "1"
+      SampleTime	      "-1"
+      VectorParams1D	      on
+      ZeroCross		      on
+    }
+    Block {
       BlockType		      Stop
     }
     Block {
@@ -972,7 +985,7 @@ Model {
   }
   System {
     Name		    "dstatcom_avg"
-    Location		    [3, 50, 1283, 800]
+    Location		    [25, 72, 1305, 822]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -986,7 +999,7 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "2041"
+    SIDHighWatermark	    "2112"
     Block {
       BlockType		      SubSystem
       Name		      "2-km\n Feeder"
@@ -1229,6 +1242,28 @@ Model {
       Setx0		      off
       InitialVoltage	      "0"
       Measurements	      "None"
+    }
+    Block {
+      BlockType		      Sum
+      Name		      "Add"
+      SID		      "2058"
+      Ports		      [4, 1]
+      Position		      [980, 411, 1010, 674]
+      ZOrder		      -2
+      ShowName		      off
+      Inputs		      "++++"
+      InputSameDT	      off
+      OutDataTypeStr	      "Inherit: Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
+      BlockType		      Goto
+      Name		      "Amount of load shed"
+      SID		      "2059"
+      Position		      [1050, 535, 1125, 555]
+      ZOrder		      -10
+      GotoTag		      "ld_shed"
+      TagVisibility	      "global"
     }
     Block {
       BlockType		      Reference
@@ -1842,10 +1877,46 @@ Model {
       PSBequivalent	      "0"
     }
     Block {
+      BlockType		      Constant
+      Name		      "Constant"
+      SID		      "2050"
+      Position		      [875, 446, 895, 464]
+      ZOrder		      -5
+      ShowName		      off
+      Value		      "3"
+    }
+    Block {
+      BlockType		      Constant
+      Name		      "Constant1"
+      SID		      "2051"
+      Position		      [875, 511, 895, 529]
+      ZOrder		      -5
+      ShowName		      off
+      Value		      "2"
+    }
+    Block {
+      BlockType		      Constant
+      Name		      "Constant2"
+      SID		      "2053"
+      Position		      [875, 576, 895, 594]
+      ZOrder		      -5
+      ShowName		      off
+      Value		      "2"
+    }
+    Block {
+      BlockType		      Constant
+      Name		      "Constant3"
+      SID		      "2055"
+      Position		      [875, 641, 895, 659]
+      ZOrder		      -5
+      ShowName		      off
+      Value		      "3.5"
+    }
+    Block {
       BlockType		      Gain
       Name		      "Conversion to MW\nfor V(pu), I (pu/1MVA)"
       SID		      "1742"
-      Position		      [205, 716, 240, 744]
+      Position		      [205, 726, 240, 754]
       Gain		      "2/3"
     }
     Block {
@@ -6387,7 +6458,7 @@ Model {
       Name		      "Discrete 3-phase\nSequence Analyzer1"
       SID		      "1724"
       Ports		      [1, 2]
-      Position		      [105, 604, 160, 651]
+      Position		      [105, 614, 160, 661]
       ZOrder		      -12
       ShowName		      off
       LibraryVersion	      "1.648"
@@ -6406,7 +6477,7 @@ Model {
       Name		      "Discrete 3-phase \nPositive-Sequence \nActive & Reactive Power"
       SID		      "1743"
       Ports		      [2, 2]
-      Position		      [105, 675, 185, 750]
+      Position		      [105, 685, 185, 760]
       NamePlacement	      "alternate"
       ShowName		      off
       LibraryVersion	      "1.648"
@@ -6577,6 +6648,16 @@ Model {
     }
     Block {
       BlockType		      From
+      Name		      "False positive"
+      SID		      "2109"
+      Position		      [115, 577, 180, 593]
+      ZOrder		      -9
+      ShowName		      off
+      GotoTag		      "false_positive"
+      TagVisibility	      "global"
+    }
+    Block {
+      BlockType		      From
       Name		      "From"
       SID		      "788"
       Position		      [355, 275, 440, 295]
@@ -6618,7 +6699,7 @@ Model {
       BlockType		      From
       Name		      "From12"
       SID		      "1758"
-      Position		      [25, 686, 85, 704]
+      Position		      [25, 696, 85, 714]
       ShowName		      off
       CloseFcn		      "tagdialog Close"
       GotoTag		      "Vabc_B4"
@@ -6628,7 +6709,7 @@ Model {
       BlockType		      From
       Name		      "From13"
       SID		      "1759"
-      Position		      [25, 721, 85, 739]
+      Position		      [25, 731, 85, 749]
       ShowName		      off
       CloseFcn		      "tagdialog Close"
       GotoTag		      "Iabc_B4"
@@ -6672,16 +6753,6 @@ Model {
     }
     Block {
       BlockType		      From
-      Name		      "From5"
-      SID		      "2041"
-      Position		      [115, 552, 180, 568]
-      ZOrder		      -9
-      ShowName		      off
-      GotoTag		      "ld_shed"
-      TagVisibility	      "global"
-    }
-    Block {
-      BlockType		      From
       Name		      "From8"
       SID		      "1705"
       Position		      [421, 50, 429, 70]
@@ -6696,7 +6767,7 @@ Model {
       BlockType		      From
       Name		      "From9"
       SID		      "1725"
-      Position		      [25, 621, 85, 639]
+      Position		      [25, 631, 85, 649]
       ShowName		      off
       CloseFcn		      "tagdialog Close"
       GotoTag		      "Vabc_B2"
@@ -6727,15 +6798,42 @@ Model {
       "       1      1.0546     0.91174           1     0.97298      1.0615           1     0.91508      1.0369        "
       "   1      1.0866     0.93486           1     0.97944      1.0789           1     0.96337      1.0568           1"
       "      1.0738     0.95638           1      1.0604     0.98562           1      1.0409     0.92954           1    "
-      " 0.94376      1.0925           1     0.98843      1.0909           1]"
-      TimeValues	      "[0          0.5     0.505981          0.6            1      1.01843          1.1          1.5 "
-      "     1.50474          1.6            2      2.06749          2.1          2.5      2.55946          2.6         "
-      "   3      3.05333          3.1          3.5      3.50433          3.6            4      4.05614          4.1    "
-      "      4.5      4.53297          4.6            5       5.0503          5.1          5.5      5.51119          5."
-      "6            6      6.06072          6.1          6.5      6.55659          6.6            7      7.00068       "
-      "   7.1          7.5      7.56174          7.6            8      8.09121          8.1          8.5      8.57905  "
-      "        8.6            9      9.09921          9.1          9.5      9.59588          9.6           10      10.0"
-      "792         10.1]"
+      " 0.94376      1.0925           1     0.98843      1.0909           1     0.91196      1.0184           1     0.9"
+      "0947      1.0675           1      1.0189     0.94667           1     0.90866      1.0561           1     0.96593"
+      "      1.0503           1     0.92238      1.0607           1      1.0132     0.99932           1      1.0235    "
+      " 0.90879           1      1.0581     0.90079           1      1.0918      0.9208           1     0.95705      1."
+      "0625           1     0.99562      1.0196           1     0.97646      1.0054           1     0.99033      1.0982"
+      "           1     0.92479      1.0119           1      1.0477     0.94127           1     0.99433      1.0107    "
+      "       1     0.94584        1.09           1     0.98335      1.0536           1     0.90124      1.0301        "
+      "   1     0.98738      1.0612           1      1.0836     0.93743           1      1.0412     0.98502           1"
+      "      1.0492      0.9169           1      1.0267     0.95617           1     0.93051      1.0568           1    "
+      "  1.0056     0.90486           1     0.99607      1.0503           1      1.0074     0.91808           1     0.9"
+      "1142      1.0669           1      1.0534     0.92919           1      1.0594     0.94422           1      1.0932"
+      "     0.98528           1     0.90593      1.0594           1     0.92281      1.0951           1     0.96514    "
+      "  1.0194           1     0.99156       1.092           1      1.0758     0.97474           1      0.9696      1."
+      "0183           1      1.0804     0.92935           1]"
+      TimeValues	      "[0          0.5     0.572666          0.6            1      1.09001          1.1          1.5 "
+      "     1.57792          1.6            2      2.05992          2.1          2.5      2.52911          2.6         "
+      "   3      3.01514          3.1          3.5      3.53352          3.6            4      4.06576          4.1    "
+      "      4.5      4.50733          4.6            5       5.0055          5.1          5.5      5.53232          5."
+      "6            6      6.05905          6.1          6.5      6.58539          6.6            7      7.02871       "
+      "   7.1          7.5      7.51731          7.6            8       8.0134          8.1          8.5      8.59947  "
+      "        8.6            9      9.01795          9.1          9.5      9.53175          9.6           10      10.0"
+      "568         10.1         10.5      10.5009         10.6           11      11.0901         11.1         11.5     "
+      " 11.5977         11.6           12      12.0557         12.1         12.5      12.5085         12.6           13"
+      "      13.0333         13.1         13.5      13.5728         13.6           14      14.0142         14.1        "
+      " 14.5      14.5552         14.6           15      15.0273         15.1         15.5      15.5974         15.6   "
+      "        16      16.0668         16.1         16.5      16.5256         16.6           17      17.0108         17"
+      ".1         17.5      17.5776         17.6           18      18.0782         18.1         18.5      18.5762      "
+      "   18.6           19      19.0914         19.1         19.5      19.5659         19.6           20      20.0568 "
+      "        20.1         20.5      20.5202         20.6           21      21.0698         21.1         21.5      21."
+      "5952         21.6           22       22.089         22.1         22.5      22.5994         22.6           23    "
+      "  23.0819         23.1         23.5      23.5545         23.6           24      24.0451         24.1         24."
+      "5      24.5891         24.6           25      25.0973         25.1         25.5      25.5593         25.6       "
+      "    26      26.0366         26.1         26.5      26.5323         26.6           27      27.0871         27.1  "
+      "       27.5      27.5216         27.6           28      28.0735         28.1         28.5      28.5366         2"
+      "8.6           29      29.0802         29.1         29.5      29.5783         29.6           30      30.0701     "
+      "    30.1]"
       HarmonicGeneration      off
       HarmonicA		      "[3 0.2 -25 0]"
       HarmonicB		      "[2 0.15 35 2]"
@@ -6795,7 +6893,7 @@ Model {
       BlockType		      Goto
       Name		      "Goto5"
       SID		      "1732"
-      Position		      [180, 606, 250, 624]
+      Position		      [180, 616, 250, 634]
       ZOrder		      -10
       ShowName		      off
       GotoTag		      "VmagB2"
@@ -6805,7 +6903,7 @@ Model {
       BlockType		      Goto
       Name		      "Goto6"
       SID		      "1760"
-      Position		      [255, 686, 325, 704]
+      Position		      [255, 696, 325, 714]
       ZOrder		      -10
       ShowName		      off
       GotoTag		      "VmagB4"
@@ -6815,20 +6913,10 @@ Model {
       BlockType		      Goto
       Name		      "Goto7"
       SID		      "1761"
-      Position		      [255, 721, 325, 739]
+      Position		      [255, 731, 325, 749]
       ZOrder		      -10
       ShowName		      off
       GotoTag		      "PQ_B4"
-      TagVisibility	      "global"
-    }
-    Block {
-      BlockType		      Goto
-      Name		      "Goto8"
-      SID		      "2029"
-      Position		      [920, 395, 965, 415]
-      ZOrder		      -10
-      ShowName		      off
-      GotoTag		      "ld_shed"
       TagVisibility	      "global"
     }
     Block {
@@ -6934,7 +7022,7 @@ Model {
       Name		      "L3"
       SID		      "1957"
       Ports		      [0, 0, 0, 0, 0, 3]
-      Position		      [937, 20, 973, 60]
+      Position		      [1027, 20, 1063, 60]
       BlockRotation	      270
       NamePlacement	      "alternate"
       AttributesFormatString  "\\n"
@@ -6952,11 +7040,21 @@ Model {
       LoadType		      "constant Z"
     }
     Block {
+      BlockType		      From
+      Name		      "Load shed"
+      SID		      "2041"
+      Position		      [115, 552, 180, 568]
+      ZOrder		      -9
+      ShowName		      off
+      GotoTag		      "ld_shed"
+      TagVisibility	      "global"
+    }
+    Block {
       BlockType		      Logic
       Name		      "Logical\nOperator1"
-      SID		      "2023"
+      SID		      "2060"
       Ports		      [1, 1]
-      Position		      [790, 402, 815, 418]
+      Position		      [790, 427, 815, 443]
       ShowName		      off
       Operator		      "NOT"
       AllPortsSameDT	      off
@@ -6964,9 +7062,9 @@ Model {
     Block {
       BlockType		      Logic
       Name		      "Logical\nOperator2"
-      SID		      "2024"
+      SID		      "2061"
       Ports		      [1, 1]
-      Position		      [790, 387, 815, 403]
+      Position		      [790, 492, 815, 508]
       ShowName		      off
       Operator		      "NOT"
       AllPortsSameDT	      off
@@ -6974,9 +7072,19 @@ Model {
     Block {
       BlockType		      Logic
       Name		      "Logical\nOperator3"
-      SID		      "2025"
+      SID		      "2062"
       Ports		      [1, 1]
-      Position		      [790, 417, 815, 433]
+      Position		      [790, 557, 815, 573]
+      ShowName		      off
+      Operator		      "NOT"
+      AllPortsSameDT	      off
+    }
+    Block {
+      BlockType		      Logic
+      Name		      "Logical\nOperator4"
+      SID		      "2063"
+      Ports		      [1, 1]
+      Position		      [790, 622, 815, 638]
       ShowName		      off
       Operator		      "NOT"
       AllPortsSameDT	      off
@@ -6986,30 +7094,9 @@ Model {
       Name		      "Logical\nOperator5"
       SID		      "1755"
       Ports		      [1, 1]
-      Position		      [790, 357, 815, 373]
+      Position		      [790, 362, 815, 378]
       ShowName		      off
       Operator		      "NOT"
-      AllPortsSameDT	      off
-    }
-    Block {
-      BlockType		      Logic
-      Name		      "Logical\nOperator6"
-      SID		      "2027"
-      Ports		      [1, 1]
-      Position		      [790, 372, 815, 388]
-      ShowName		      off
-      Operator		      "NOT"
-      AllPortsSameDT	      off
-    }
-    Block {
-      BlockType		      Logic
-      Name		      "Logical\nOperator7"
-      SID		      "2028"
-      Ports		      [4, 1]
-      Position		      [845, 372, 890, 433]
-      ShowName		      off
-      Operator		      "OR"
-      Inputs		      "4"
       AllPortsSameDT	      off
     }
     Block {
@@ -7017,7 +7104,7 @@ Model {
       Name		      "On/Off Delay"
       SID		      "1756"
       Ports		      [1, 1]
-      Position		      [920, 352, 965, 378]
+      Position		      [845, 362, 885, 378]
       ZOrder		      -10
       ShowName		      off
       LibraryVersion	      "1.648"
@@ -7184,6 +7271,54 @@ Model {
       }
     }
     Block {
+      BlockType		      Product
+      Name		      "Product"
+      SID		      "2049"
+      Ports		      [2, 1]
+      Position		      [920, 424, 945, 466]
+      ZOrder		      -19
+      ShowName		      off
+      InputSameDT	      off
+      OutDataTypeStr	      "Inherit: Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
+      BlockType		      Product
+      Name		      "Product1"
+      SID		      "2052"
+      Ports		      [2, 1]
+      Position		      [920, 488, 945, 532]
+      ZOrder		      -19
+      ShowName		      off
+      InputSameDT	      off
+      OutDataTypeStr	      "Inherit: Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
+      BlockType		      Product
+      Name		      "Product2"
+      SID		      "2054"
+      Ports		      [2, 1]
+      Position		      [920, 554, 945, 596]
+      ZOrder		      -19
+      ShowName		      off
+      InputSameDT	      off
+      OutDataTypeStr	      "Inherit: Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
+      BlockType		      Product
+      Name		      "Product3"
+      SID		      "2056"
+      Ports		      [2, 1]
+      Position		      [920, 619, 945, 661]
+      ZOrder		      -19
+      ShowName		      off
+      InputSameDT	      off
+      OutDataTypeStr	      "Inherit: Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
       BlockType		      Scope
       Name		      "Scope1"
       SID		      "239"
@@ -7267,19 +7402,20 @@ Model {
       BlockType		      Scope
       Name		      "Scope3"
       SID		      "241"
-      Ports		      [3]
-      Position		      [200, 498, 240, 572]
+      Ports		      [4]
+      Position		      [200, 497, 240, 598]
       BackgroundColor	      "green"
       Floating		      off
-      Location		      [1, 71, 1281, 723]
+      Location		      [5, 72, 1277, 791]
       Open		      off
-      NumInputPorts	      "3"
+      NumInputPorts	      "4"
       ZoomMode		      "yonly"
       List {
 	ListType		AxesTitles
 	axes1			"%<SignalLabel>"
 	axes2			"%<SignalLabel>"
 	axes3			"%<SignalLabel>"
+	axes4			"%<SignalLabel>"
       }
       List {
 	ListType		ScopeGraphics
@@ -7292,9 +7428,9 @@ Model {
 	MarkerStyles		"none|none|none|none|none|none"
       }
       ShowLegends	      on
-      TimeRange		      "1"
-      YMin		      "0~0.99~0.95"
-      YMax		      "8~1.065~1.05"
+      TimeRange		      "2"
+      YMin		      "0~0.99~-0.1~0"
+      YMax		      "8~1.065~3.5~1.1"
       SaveToWorkspace	      on
       SaveName		      "Scope3"
       DataFormat	      "StructureWithTime"
@@ -7307,7 +7443,7 @@ Model {
       Name		      "Selector4"
       SID		      "1747"
       Ports		      [1, 1]
-      Position		      [205, 683, 230, 707]
+      Position		      [205, 693, 230, 717]
       ShowName		      off
       InputPortWidth	      "2"
       IndexOptions	      "Index vector (dialog)"
@@ -7318,7 +7454,7 @@ Model {
       BlockType		      Stop
       Name		      "Stop Simulation"
       SID		      "1762"
-      Position		      [995, 347, 1030, 383]
+      Position		      [915, 357, 950, 383]
       ZOrder		      -4
       ShowName		      off
     }
@@ -7326,7 +7462,7 @@ Model {
       BlockType		      Terminator
       Name		      "Terminator1"
       SID		      "1726"
-      Position		      [180, 632, 195, 648]
+      Position		      [180, 642, 195, 658]
       ShowName		      off
     }
     Block {
@@ -7517,7 +7653,7 @@ Model {
       BackgroundColor	      "green"
       ShowName		      off
       Floating		      off
-      Location		      [104, 207, 1384, 931]
+      Location		      [96, 72, 1273, 791]
       Open		      off
       NumInputPorts	      "6"
       ZoomMode		      "yonly"
@@ -7541,8 +7677,12 @@ Model {
 	MarkerStyles		"none|none|none|none|none|none"
       }
       ShowLegends	      on
-      YMin		      "0.95~0.95~-0.1~0.95~0.95~-5"
-      YMax		      "1.05~1.05~1.1~1.05~1.05~5"
+      LegendLocations	      "0.89663     0.94044    0.065449    0.025039\n0.89153     0.78161    0.070546    0.025039\n"
+      "0.89153     0.62382    0.070546    0.025039\n0.89153     0.46499    0.070546    0.025039\n0.89153     0.30721   "
+      " 0.070546    0.025039\n0.88983     0.14838    0.077343    0.025039"
+      TimeRange		      "5"
+      YMin		      "0.95~0.95~-0.1~0.95~0.95~-0.1"
+      YMax		      "1.05~1.05~1.1~1.05~1.05~1.1"
       SaveToWorkspace	      on
       SaveName		      "Trippers"
       DataFormat	      "StructureWithTime"
@@ -7745,7 +7885,7 @@ Model {
       MaskHideContents	      off
       System {
 	Name			"Tripper0"
-	Location		[250, 325, 1042, 729]
+	Location		[652, 626, 1444, 1030]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -7819,7 +7959,7 @@ Model {
 	  Position		  [105, 82, 170, 98]
 	  ZOrder		  -9
 	  ShowName		  off
-	  GotoTag		  "ld_recon"
+	  GotoTag		  "ld_reconn"
 	  TagVisibility		  "global"
 	}
 	Block {
@@ -8027,7 +8167,7 @@ Model {
 	  Position		  [105, 67, 170, 83]
 	  ZOrder		  -9
 	  ShowName		  off
-	  GotoTag		  "ld_recon"
+	  GotoTag		  "ld_reconn"
 	  TagVisibility		  "global"
 	}
 	Block {
@@ -8235,7 +8375,7 @@ Model {
 	  Position		  [105, 82, 170, 98]
 	  ZOrder		  -9
 	  ShowName		  off
-	  GotoTag		  "ld_recon"
+	  GotoTag		  "ld_reconn"
 	  TagVisibility		  "global"
 	}
 	Block {
@@ -8443,7 +8583,7 @@ Model {
 	  Position		  [105, 82, 170, 98]
 	  ZOrder		  -9
 	  ShowName		  off
-	  GotoTag		  "ld_recon"
+	  GotoTag		  "ld_reconn"
 	  TagVisibility		  "global"
 	}
 	Block {
@@ -8564,6 +8704,755 @@ Model {
     }
     Block {
       BlockType		      SubSystem
+      Name		      "Variable\nLoad"
+      SID		      "2073"
+      Ports		      [0, 0, 0, 0, 0, 3]
+      Position		      [936, 20, 974, 60]
+      BlockRotation	      270
+      ShowName		      off
+      MinAlgLoopOccurrences   off
+      PropExecContextOutsideSubsystem off
+      RTWSystemCode	      "Auto"
+      FunctionWithSeparateData off
+      Opaque		      off
+      RequestExecContextInheritance off
+      MaskHideContents	      off
+      MaskType		      "Variable Load (Constant Current)"
+      MaskPromptString	      "Nominal load: [ Current (Arms)    Power factor (0 a 1) ]|Modulation: [ Amplitude (Arms) "
+      "  Frequency (Hz) ]|Modulation timing : [ Ton  Toff ]|Nominal voltage (Volts rms ph-ph)|Sample time:"
+      MaskStyleString	      "edit,edit,edit,edit,edit"
+      MaskVariables	      "Par_Nom=@1;Par_Mod=@2;Par_Time=@3;Vbase=@4;Ts=@5;"
+      MaskTunableValueString  "on,on,on,on,on"
+      MaskCallbackString      "||||"
+      MaskEnableString	      "on,on,on,on,on"
+      MaskVisibilityString    "on,on,on,on,on"
+      MaskToolTipString	      "on,on,on,on,on"
+      MaskInitialization      "NomAmp=Par_Nom(1)*sqrt(2);\nNomPha=-acos(Par_Nom(2));\nModFreq=Par_Mod(2);\nModAmp=Par_"
+      "Mod(1)*sqrt(2);\nTon=Par_Time(1);\nToff=Par_Time(2);\n"
+      MaskDisplay	      "disp('Var\\nload')"
+      MaskIconFrame	      on
+      MaskIconOpaque	      on
+      MaskIconRotate	      "none"
+      MaskPortRotate	      "default"
+      MaskIconUnits	      "autoscale"
+      MaskValueString	      "[3000 0.9]|[2000  5]|[0.15 100]|600|Ts"
+      System {
+	Name			"Variable\nLoad"
+	Location		[47, 102, 1059, 701]
+	Open			off
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"A4"
+	PaperUnits		"centimeters"
+	TiledPaperMargins	[1.270000, 1.270000, 1.270000, 1.270000]
+	TiledPageScale		1
+	ShowPageBoundaries	off
+	ZoomFactor		"100"
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant"
+	  SID			  "2074"
+	  Position		  [290, 193, 355, 217]
+	  ForegroundColor	  "blue"
+	  ShowName		  off
+	  Value			  "[0 -2*pi/3] "
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant2"
+	  SID			  "2075"
+	  Position		  [125, 324, 175, 346]
+	  ForegroundColor	  "blue"
+	  ShowName		  off
+	  Value			  "ModFreq"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant3"
+	  SID			  "2076"
+	  Position		  [290, 223, 355, 247]
+	  ForegroundColor	  "blue"
+	  ShowName		  off
+	  Value			  "NomPha"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant5"
+	  SID			  "2077"
+	  Position		  [370, 385, 425, 405]
+	  ForegroundColor	  "blue"
+	  ShowName		  off
+	  Value			  "NomAmp"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant6"
+	  SID			  "2078"
+	  Position		  [335, 310, 390, 330]
+	  ForegroundColor	  "blue"
+	  ShowName		  off
+	  Value			  "ModAmp"
+	}
+	Block {
+	  BlockType		  Demux
+	  Name			  "Demux"
+	  SID			  "2079"
+	  Ports			  [1, 2]
+	  Position		  [610, 201, 615, 239]
+	  BackgroundColor	  "black"
+	  ShowName		  off
+	  Outputs		  "2"
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "Discrete\n3-phase PLL"
+	  SID			  "2080"
+	  Ports			  [1, 3]
+	  Position		  [220, 84, 290, 156]
+	  ForegroundColor	  "blue"
+	  LibraryVersion	  "1.648"
+	  SourceBlock		  "powerlib_extras/Discrete \nControl Blocks/Discrete\n3-phase PLL"
+	  SourceType		  "Discrete 3-phase PLL"
+	  Fmin			  "45"
+	  Par_Init		  "[0 60]"
+	  ParK			  "[60 1400]"
+	  Ts			  "Ts"
+	  AGC			  off
+	}
+	Block {
+	  BlockType		  Gain
+	  Name			  "Gain"
+	  SID			  "2081"
+	  Position		  [200, 320, 240, 350]
+	  ForegroundColor	  "blue"
+	  ShowName		  off
+	  Gain			  "2*pi"
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "Ia"
+	  SID			  "2082"
+	  Description		  "source block"
+	  Ports			  [1, 0, 0, 0, 0, 1, 1]
+	  Position		  [670, 178, 710, 247]
+	  AttributesFormatString  "\\n"
+	  LibraryVersion	  "1.2119"
+	  SourceBlock		  "powerlib/Electrical\nSources/Controlled Current Source"
+	  SourceType		  "Controlled Current Source"
+	  Initialize		  on
+	  Source_Type		  "AC"
+	  Amplitude		  "0"
+	  Phase			  "0"
+	  Frequency		  "0"
+	  Measurements		  "None"
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "Ib"
+	  SID			  "2083"
+	  Description		  "source block"
+	  Ports			  [1, 0, 0, 0, 0, 1, 1]
+	  Position		  [670, 268, 710, 337]
+	  AttributesFormatString  "\\n"
+	  LibraryVersion	  "1.2119"
+	  SourceBlock		  "powerlib/Electrical\nSources/Controlled Current Source"
+	  SourceType		  "Controlled Current Source"
+	  Initialize		  on
+	  Source_Type		  "AC"
+	  Amplitude		  "0"
+	  Phase			  "0"
+	  Frequency		  "0"
+	  Measurements		  "None"
+	}
+	Block {
+	  BlockType		  Mux
+	  Name			  "Mux"
+	  SID			  "2084"
+	  Ports			  [3, 1]
+	  Position		  [780, 404, 785, 466]
+	  BlockMirror		  on
+	  ShowName		  off
+	  Inputs		  "3"
+	  DisplayOption		  "bar"
+	}
+	Block {
+	  BlockType		  Product
+	  Name			  "Product"
+	  SID			  "2085"
+	  Ports			  [2, 1]
+	  Position		  [540, 191, 565, 249]
+	  ForegroundColor	  "blue"
+	  ShowName		  off
+	  RndMeth		  "Floor"
+	}
+	Block {
+	  BlockType		  Product
+	  Name			  "Product1"
+	  SID			  "2086"
+	  Ports			  [2, 1]
+	  Position		  [275, 321, 300, 379]
+	  ForegroundColor	  "blue"
+	  ShowName		  off
+	  RndMeth		  "Floor"
+	}
+	Block {
+	  BlockType		  Product
+	  Name			  "Product2"
+	  SID			  "2087"
+	  Ports			  [3, 1]
+	  Position		  [410, 271, 435, 369]
+	  ForegroundColor	  "blue"
+	  ShowName		  off
+	  Inputs		  "3"
+	  RndMeth		  "Floor"
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "Series RLC Branch1"
+	  SID			  "2088"
+	  Ports			  [0, 0, 0, 0, 0, 1, 1]
+	  Position		  [816, 110, 834, 150]
+	  BlockRotation		  270
+	  NamePlacement		  "alternate"
+	  ShowName		  off
+	  AttributesFormatString  "\\n"
+	  LibraryVersion	  "1.2119"
+	  SourceBlock		  "powerlib/Elements/Series RLC Branch"
+	  SourceType		  "Series RLC Branch"
+	  LConnTagsString	  "__new0"
+	  RConnTagsString	  "__new0"
+	  BranchType		  "R"
+	  Resistance		  "1e6"
+	  Inductance		  "1.0"
+	  SetiL0		  off
+	  InitialCurrent	  "0"
+	  Capacitance		  "1.0"
+	  Setx0			  off
+	  InitialVoltage	  "0"
+	  Measurements		  "None"
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "Series RLC Branch3"
+	  SID			  "2089"
+	  Ports			  [0, 0, 0, 0, 0, 1, 1]
+	  Position		  [786, 120, 804, 160]
+	  BlockRotation		  270
+	  NamePlacement		  "alternate"
+	  ShowName		  off
+	  AttributesFormatString  "\\n"
+	  LibraryVersion	  "1.2119"
+	  SourceBlock		  "powerlib/Elements/Series RLC Branch"
+	  SourceType		  "Series RLC Branch"
+	  LConnTagsString	  "__new0"
+	  RConnTagsString	  "__new0"
+	  BranchType		  "R"
+	  Resistance		  "1e6"
+	  Inductance		  "1.0"
+	  SetiL0		  off
+	  InitialCurrent	  "0"
+	  Capacitance		  "1.0"
+	  Setx0			  off
+	  InitialVoltage	  "0"
+	  Measurements		  "None"
+	}
+	Block {
+	  BlockType		  Sum
+	  Name			  "Sum"
+	  SID			  "2090"
+	  Ports			  [3, 1]
+	  Position		  [380, 158, 410, 252]
+	  ForegroundColor	  "blue"
+	  ShowName		  off
+	  Inputs		  "+++"
+	}
+	Block {
+	  BlockType		  Sum
+	  Name			  "Sum1"
+	  SID			  "2091"
+	  Ports			  [2, 1]
+	  Position		  [195, 232, 220, 308]
+	  ForegroundColor	  "blue"
+	  ShowName		  off
+	}
+	Block {
+	  BlockType		  Sum
+	  Name			  "Sum3"
+	  SID			  "2092"
+	  Ports			  [2, 1]
+	  Position		  [465, 294, 490, 396]
+	  ForegroundColor	  "blue"
+	  ShowName		  off
+	}
+	Block {
+	  BlockType		  Terminator
+	  Name			  "Terminator"
+	  SID			  "2093"
+	  Position		  [310, 138, 320, 152]
+	  ForegroundColor	  "blue"
+	  ShowName		  off
+	}
+	Block {
+	  BlockType		  Terminator
+	  Name			  "Terminator1"
+	  SID			  "2094"
+	  Position		  [315, 88, 325, 102]
+	  ForegroundColor	  "blue"
+	  ShowName		  off
+	}
+	Block {
+	  BlockType		  Step
+	  Name			  "Toff"
+	  SID			  "2095"
+	  Position		  [130, 280, 155, 300]
+	  ForegroundColor	  "blue"
+	  Time			  "Toff"
+	  After			  "-1"
+	  SampleTime		  "Ts"
+	}
+	Block {
+	  BlockType		  Step
+	  Name			  "Ton"
+	  SID			  "2096"
+	  Position		  [130, 240, 155, 260]
+	  ForegroundColor	  "blue"
+	  Time			  "Ton"
+	  SampleTime		  "Ts"
+	}
+	Block {
+	  BlockType		  Trigonometry
+	  Name			  "Trigonometric\nFunction"
+	  SID			  "2097"
+	  Ports			  [1, 1]
+	  Position		  [450, 190, 480, 220]
+	  ForegroundColor	  "blue"
+	  ShowName		  off
+	}
+	Block {
+	  BlockType		  Trigonometry
+	  Name			  "Trigonometric\nFunction1"
+	  SID			  "2098"
+	  Ports			  [1, 1]
+	  Position		  [320, 335, 350, 365]
+	  ForegroundColor	  "blue"
+	  ShowName		  off
+	}
+	Block {
+	  BlockType		  Gain
+	  Name			  "V->pu"
+	  SID			  "2099"
+	  Position		  [150, 104, 180, 136]
+	  ForegroundColor	  "blue"
+	  Gain			  "1/(Vbase*sqrt(2)/sqrt(3))"
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "Va"
+	  SID			  "2100"
+	  Tag			  "PoWeRsYsTeMmEaSuReMeNt"
+	  Ports			  [0, 1, 0, 0, 0, 2]
+	  Position		  [830, 403, 855, 427]
+	  BlockMirror		  on
+	  AttributesFormatString  "\\n"
+	  LibraryVersion	  "1.2119"
+	  SourceBlock		  "powerlib/Measurements/Voltage Measurement"
+	  SourceType		  "Voltage Measurement"
+	  PhasorSimulation	  off
+	  OutputType		  "Magnitude"
+	  PSBequivalent		  "0"
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "Va1"
+	  SID			  "2101"
+	  Tag			  "PoWeRsYsTeMmEaSuReMeNt"
+	  Ports			  [0, 1, 0, 0, 0, 2]
+	  Position		  [830, 453, 855, 477]
+	  BlockMirror		  on
+	  AttributesFormatString  "\\n"
+	  LibraryVersion	  "1.2119"
+	  SourceBlock		  "powerlib/Measurements/Voltage Measurement"
+	  SourceType		  "Voltage Measurement"
+	  PhasorSimulation	  off
+	  OutputType		  "Magnitude"
+	  PSBequivalent		  "0"
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "Va2"
+	  SID			  "2102"
+	  Tag			  "PoWeRsYsTeMmEaSuReMeNt"
+	  Ports			  [0, 1, 0, 0, 0, 2]
+	  Position		  [830, 498, 855, 522]
+	  BlockMirror		  on
+	  AttributesFormatString  "\\n"
+	  LibraryVersion	  "1.2119"
+	  SourceBlock		  "powerlib/Measurements/Voltage Measurement"
+	  SourceType		  "Voltage Measurement"
+	  PhasorSimulation	  off
+	  OutputType		  "Magnitude"
+	  PSBequivalent		  "0"
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "output Ground1"
+	  SID			  "2103"
+	  Ports			  [0, 0, 0, 0, 0, 1, 1]
+	  Position		  [869, 550, 891, 570]
+	  BlockRotation		  270
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  ShowName		  off
+	  AttributesFormatString  "\\n"
+	  LibraryVersion	  "1.2119"
+	  SourceBlock		  "powerlib/Elements/Ground"
+	  SourceType		  "Ground"
+	  LConnTagsString	  "a"
+	  RConnTagsString	  "__newr0"
+	}
+	Block {
+	  BlockType		  DigitalClock
+	  Name			  "t"
+	  SID			  "2104"
+	  Position		  [205, 355, 245, 375]
+	  ForegroundColor	  "blue"
+	  SampleTime		  "Ts"
+	}
+	Block {
+	  BlockType		  PMIOPort
+	  Name			  "A"
+	  SID			  "2105"
+	  Position		  [925, 178, 955, 192]
+	  BlockMirror		  on
+	  Port			  "1"
+	  Side			  "Left"
+	}
+	Block {
+	  BlockType		  PMIOPort
+	  Name			  "B"
+	  SID			  "2106"
+	  Position		  [925, 268, 955, 282]
+	  BlockMirror		  on
+	  Port			  "2"
+	  Side			  "Left"
+	}
+	Block {
+	  BlockType		  PMIOPort
+	  Name			  "C"
+	  SID			  "2107"
+	  Position		  [925, 128, 955, 142]
+	  BlockMirror		  on
+	  Port			  "3"
+	  Side			  "Left"
+	}
+	Line {
+	  SrcBlock		  "Sum1"
+	  SrcPort		  1
+	  Points		  [170, 0]
+	  DstBlock		  "Product2"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Toff"
+	  SrcPort		  1
+	  DstBlock		  "Sum1"
+	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "Ton"
+	  SrcPort		  1
+	  DstBlock		  "Sum1"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Constant6"
+	  SrcPort		  1
+	  DstBlock		  "Product2"
+	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "Trigonometric\nFunction1"
+	  SrcPort		  1
+	  DstBlock		  "Product2"
+	  DstPort		  3
+	}
+	Line {
+	  SrcBlock		  "Constant5"
+	  SrcPort		  1
+	  Points		  [20, 0]
+	  DstBlock		  "Sum3"
+	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "Product2"
+	  SrcPort		  1
+	  DstBlock		  "Sum3"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Sum3"
+	  SrcPort		  1
+	  Points		  [30, 0]
+	  DstBlock		  "Product"
+	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "Product1"
+	  SrcPort		  1
+	  DstBlock		  "Trigonometric\nFunction1"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "t"
+	  SrcPort		  1
+	  DstBlock		  "Product1"
+	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "Gain"
+	  SrcPort		  1
+	  DstBlock		  "Product1"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Constant2"
+	  SrcPort		  1
+	  DstBlock		  "Gain"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Constant3"
+	  SrcPort		  1
+	  DstBlock		  "Sum"
+	  DstPort		  3
+	}
+	Line {
+	  SrcBlock		  "Mux"
+	  SrcPort		  1
+	  Points		  [-675, 0; 0, -315]
+	  DstBlock		  "V->pu"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Discrete\n3-phase PLL"
+	  SrcPort		  2
+	  Points		  [55, 0; 0, 55]
+	  DstBlock		  "Sum"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "V->pu"
+	  SrcPort		  1
+	  DstBlock		  "Discrete\n3-phase PLL"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Discrete\n3-phase PLL"
+	  SrcPort		  3
+	  DstBlock		  "Terminator"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Discrete\n3-phase PLL"
+	  SrcPort		  1
+	  DstBlock		  "Terminator1"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Product"
+	  SrcPort		  1
+	  DstBlock		  "Demux"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Trigonometric\nFunction"
+	  SrcPort		  1
+	  DstBlock		  "Product"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Sum"
+	  SrcPort		  1
+	  DstBlock		  "Trigonometric\nFunction"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Constant"
+	  SrcPort		  1
+	  DstBlock		  "Sum"
+	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "Va2"
+	  SrcPort		  1
+	  Points		  [-25, 0]
+	  DstBlock		  "Mux"
+	  DstPort		  3
+	}
+	Line {
+	  SrcBlock		  "Va1"
+	  SrcPort		  1
+	  Points		  [-15, 0; 0, -30]
+	  DstBlock		  "Mux"
+	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "Va"
+	  SrcPort		  1
+	  DstBlock		  "Mux"
+	  DstPort		  1
+	}
+	Line {
+	  LineType		  "Connection"
+	  SrcBlock		  "output Ground1"
+	  SrcPort		  LConn1
+	  Points		  [0, -20]
+	  Branch {
+	    ConnectType		    "DEST_SRC"
+	    DstBlock		    "Va2"
+	    DstPort		    LConn2
+	  }
+	  Branch {
+	    ConnectType		    "DEST_SRC"
+	    Points		    [0, -45]
+	    Branch {
+	      ConnectType	      "DEST_SRC"
+	      DstBlock		      "Va1"
+	      DstPort		      LConn2
+	    }
+	    Branch {
+	      ConnectType	      "DEST_SRC"
+	      Points		      [0, -50]
+	      DstBlock		      "Va"
+	      DstPort		      LConn2
+	    }
+	  }
+	}
+	Line {
+	  LineType		  "Connection"
+	  Points		  [825, 275; 0, 85; -175, 0; 0, -45; 5, 5]
+	  DstBlock		  "Ib"
+	  DstPort		  LConn1
+	  Branch {
+	    ConnectType		    "SRC_DEST"
+	    SrcBlock		    "Series RLC Branch1"
+	    SrcPort		    LConn1
+	    Points		    [0, 110]
+	  }
+	  Branch {
+	    ConnectType		    "SRC_SRC"
+	    Points		    [70, 0]
+	    Branch {
+	      ConnectType	      "DEST_DEST"
+	      SrcBlock		      "B"
+	      SrcPort		      RConn1
+	      Points		      [-15, 0]
+	    }
+	    Branch {
+	      ConnectType	      "DEST_SRC"
+	      Points		      [0, 185]
+	      DstBlock		      "Va1"
+	      DstPort		      LConn1
+	    }
+	  }
+	}
+	Line {
+	  LineType		  "Connection"
+	  Points		  [795, 185; 0, 70; -140, 0; 0, -25]
+	  DstBlock		  "Ia"
+	  DstPort		  LConn1
+	  Branch {
+	    ConnectType		    "SRC_DEST"
+	    SrcBlock		    "Series RLC Branch3"
+	    SrcPort		    LConn1
+	    Points		    [0, 10]
+	  }
+	  Branch {
+	    ConnectType		    "SRC_SRC"
+	    Points		    [95, 0]
+	    Branch {
+	      ConnectType	      "DEST_DEST"
+	      SrcBlock		      "A"
+	      SrcPort		      RConn1
+	      Points		      [-20, 0]
+	    }
+	    Branch {
+	      ConnectType	      "DEST_SRC"
+	      Points		      [0, 225]
+	      DstBlock		      "Va"
+	      DstPort		      LConn1
+	    }
+	  }
+	}
+	Line {
+	  LineType		  "Connection"
+	  SrcBlock		  "Series RLC Branch1"
+	  SrcPort		  RConn1
+	  Points		  [0, -40]
+	  Branch {
+	    ConnectType		    "DEST_SRC"
+	    Points		    [-30, -1]
+	    Branch {
+	      ConnectType	      "DEST_DEST"
+	      SrcBlock		      "Series RLC Branch3"
+	      SrcPort		      RConn1
+	      Points		      [0, -51]
+	    }
+	    Branch {
+	      ConnectType	      "DEST_SRC"
+	      Points		      [-30, 0]
+	      Branch {
+		ConnectType		"DEST_DEST"
+		SrcBlock		"Ia"
+		SrcPort			RConn1
+		Points			[10, 0; 0, -161; 30, 0]
+	      }
+	      Branch {
+		ConnectType		"DEST_SRC"
+		Points			[0, 246]
+		DstBlock		"Ib"
+		DstPort			RConn1
+	      }
+	    }
+	  }
+	  Branch {
+	    ConnectType		    "DEST_DEST"
+	    Points		    [900, 135; -45, 0; 0, -80; -30, 0]
+	    Branch {
+	      ConnectType	      "SRC_DEST"
+	      SrcBlock		      "C"
+	      SrcPort		      RConn1
+	      Points		      [-10, 0]
+	    }
+	    Branch {
+	      ConnectType	      "SRC_SRC"
+	      Points		      [0, 370]
+	      DstBlock		      "Va2"
+	      DstPort		      LConn1
+	    }
+	  }
+	}
+	Line {
+	  SrcBlock		  "Demux"
+	  SrcPort		  2
+	  Points		  [20, 0; 0, 50]
+	  DstBlock		  "Ib"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Demux"
+	  SrcPort		  1
+	  Points		  [15, 0; 0, -20]
+	  DstBlock		  "Ia"
+	  DstPort		  1
+	}
+      }
+    }
+    Block {
+      BlockType		      SubSystem
       Name		      "game"
       SID		      "1842"
       Ports		      []
@@ -8587,8 +9476,8 @@ Model {
       MaskIconUnits	      "autoscale"
       System {
 	Name			"game"
-	Location		[6, 144, 1286, 894]
-	Open			off
+	Location		[102, 81, 1265, 831]
+	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -8646,7 +9535,7 @@ Model {
 	  BlockType		  Clock
 	  Name			  "Clock3"
 	  SID			  "1835"
-	  Position		  [150, 207, 165, 223]
+	  Position		  [150, 217, 165, 233]
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
 	  ShowName		  off
@@ -8673,7 +9562,7 @@ Model {
 	  BlockType		  Clock
 	  Name			  "Clock6"
 	  SID			  "1911"
-	  Position		  [1010, 32, 1025, 48]
+	  Position		  [1010, 42, 1025, 58]
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
 	  ShowName		  off
@@ -8726,7 +9615,7 @@ Model {
 	  Name			  "Demux"
 	  SID			  "1854"
 	  Ports			  [1, 4]
-	  Position		  [455, 188, 460, 262]
+	  Position		  [470, 188, 475, 262]
 	  ZOrder		  -7
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
@@ -8763,20 +9652,32 @@ Model {
 	  BlockType		  Demux
 	  Name			  "Demux3"
 	  SID			  "2032"
-	  Ports			  [1, 2]
-	  Position		  [855, 29, 860, 76]
+	  Ports			  [1, 3]
+	  Position		  [855, 32, 860, 98]
 	  ZOrder		  -7
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
 	  ShowName		  off
-	  Outputs		  "2"
+	  Outputs		  "3"
 	  DisplayOption		  "bar"
+	}
+	Block {
+	  BlockType		  From
+	  Name			  "From1"
+	  SID			  "2064"
+	  Position		  [150, 337, 215, 353]
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  ShowName		  off
+	  CloseFcn		  "tagdialog Close"
+	  GotoTag		  "ld_shed"
+	  TagVisibility		  "global"
 	}
 	Block {
 	  BlockType		  From
 	  Name			  "From10"
 	  SID			  "2031"
-	  Position		  [1010, 57, 1075, 73]
+	  Position		  [1010, 67, 1075, 83]
 	  ZOrder		  -9
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
@@ -8788,7 +9689,7 @@ Model {
 	  BlockType		  From
 	  Name			  "From14"
 	  SID			  "1836"
-	  Position		  [150, 323, 215, 347]
+	  Position		  [150, 307, 215, 323]
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
 	  ShowName		  off
@@ -8800,7 +9701,7 @@ Model {
 	  BlockType		  From
 	  Name			  "From15"
 	  SID			  "1837"
-	  Position		  [205, 283, 270, 307]
+	  Position		  [200, 277, 265, 293]
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
 	  ShowName		  off
@@ -8815,22 +9716,9 @@ Model {
 	  Position		  [200, 226, 335, 244]
 	  ZOrder		  -10
 	  BlockMirror		  on
-	  BackgroundColor	  "green"
 	  NamePlacement		  "alternate"
 	  ShowName		  off
 	  GotoTag		  "attacked"
-	  TagVisibility		  "global"
-	}
-	Block {
-	  BlockType		  Goto
-	  Name			  "Goto2"
-	  SID			  "2033"
-	  Position		  [700, 56, 765, 74]
-	  ZOrder		  -10
-	  BlockMirror		  on
-	  NamePlacement		  "alternate"
-	  ShowName		  off
-	  GotoTag		  "ld_recon"
 	  TagVisibility		  "global"
 	}
 	Block {
@@ -8851,12 +9739,12 @@ Model {
 	  Name			  "Interpreted MATLAB\nFunction"
 	  SID			  "1838"
 	  Ports			  [1]
-	  Position		  [25, 260, 95, 290]
+	  Position		  [25, 270, 95, 300]
 	  ZOrder		  -2
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
 	  ShowName		  off
-	  MATLABFcn		  "defender_statcom(u(1), u(2), u(3), u(4))"
+	  MATLABFcn		  "defender_statcom(u(1), u(2), u(3), u(4), u(5))"
 	  OutputDimensions	  "0"
 	  MaskDisplay		  "disp('Defender')"
 	  MaskIconFrame		  on
@@ -8882,12 +9770,13 @@ Model {
 	  BlockType		  Mux
 	  Name			  "Mux2"
 	  SID			  "1839"
-	  Ports			  [4, 1]
-	  Position		  [120, 195, 125, 355]
+	  Ports			  [5, 1]
+	  Position		  [120, 205, 125, 365]
 	  ZOrder		  -12
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
 	  ShowName		  off
+	  Inputs		  "5"
 	  DisplayOption		  "bar"
 	}
 	Block {
@@ -8908,7 +9797,7 @@ Model {
 	  Name			  "Mux4"
 	  SID			  "1860"
 	  Ports			  [3, 1]
-	  Position		  [415, 187, 420, 243]
+	  Position		  [440, 187, 445, 243]
 	  ZOrder		  -12
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
@@ -8947,7 +9836,7 @@ Model {
 	  Name			  "Mux7"
 	  SID			  "2030"
 	  Ports			  [2, 1]
-	  Position		  [980, 29, 985, 76]
+	  Position		  [980, 39, 985, 86]
 	  ZOrder		  -12
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
@@ -8956,11 +9845,62 @@ Model {
 	  DisplayOption		  "bar"
 	}
 	Block {
+	  BlockType		  Saturate
+	  Name			  "Saturation"
+	  SID			  "2071"
+	  Ports			  [1, 1]
+	  Position		  [375, 200, 405, 230]
+	  ZOrder		  -15
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  InputPortMap		  "u0"
+	  UpperLimit		  "1.2"
+	  LowerLimit		  "-1.2"
+	}
+	Block {
+	  BlockType		  Scope
+	  Name			  "Scope1"
+	  SID			  "2072"
+	  Ports			  [2]
+	  Position		  [310, 134, 330, 161]
+	  BlockMirror		  on
+	  BackgroundColor	  "green"
+	  Floating		  off
+	  Location		  [1, 46, 1681, 1019]
+	  Open			  off
+	  NumInputPorts		  "2"
+	  ZoomMode		  "yonly"
+	  List {
+	    ListType		    AxesTitles
+	    axes1		    "%<SignalLabel>"
+	    axes2		    "%<SignalLabel>"
+	  }
+	  List {
+	    ListType		    ScopeGraphics
+	    FigureColor		    "[0.501960784313725 0.501960784313725 0.501960784313725]"
+	    AxesColor		    "[0 0 0]"
+	    AxesTickColor	    "[1 1 1]"
+	    LineColors		    "[1 1 0;1 0 1;0 1 1;1 0 0;0 1 0;0 0 1]"
+	    LineStyles		    "-|-|-|-|-|-"
+	    LineWidths		    "[0.5 0.5 0.5 0.5 0.5 0.5]"
+	    MarkerStyles	    "none|none|none|none|none|none"
+	  }
+	  ShowLegends		  off
+	  TimeRange		  "0.7"
+	  YMin			  "-1.5~-4000"
+	  YMax			  "1.5~4000"
+	  SaveName		  "Sig"
+	  DataFormat		  "StructureWithTime"
+	  LimitDataPoints	  off
+	  SampleInput		  on
+	  SampleTime		  "Ts"
+	}
+	Block {
 	  BlockType		  Selector
 	  Name			  "Selector2"
 	  SID			  "1840"
 	  Ports			  [1, 1]
-	  Position		  [150, 279, 175, 311]
+	  Position		  [150, 269, 175, 301]
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
 	  ShowName		  off
@@ -8974,12 +9914,36 @@ Model {
 	  Name			  "Transport\nDelay"
 	  SID			  "2040"
 	  Ports			  [1, 1]
-	  Position		  [795, 50, 825, 80]
+	  Position		  [785, 50, 820, 80]
 	  ZOrder		  -10
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
 	  ShowName		  off
 	  DelayTime		  "Ts"
+	}
+	Block {
+	  BlockType		  Goto
+	  Name			  "ld_reconn"
+	  SID			  "2068"
+	  Position		  [675, 55, 745, 75]
+	  ZOrder		  -10
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  ShowName		  off
+	  GotoTag		  "ld_reconn"
+	  TagVisibility		  "global"
+	}
+	Block {
+	  BlockType		  Goto
+	  Name			  "ld_reconn1"
+	  SID			  "2108"
+	  Position		  [675, 75, 745, 95]
+	  ZOrder		  -10
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  ShowName		  off
+	  GotoTag		  "false_positive"
+	  TagVisibility		  "global"
 	}
 	Block {
 	  BlockType		  Switch
@@ -9063,12 +10027,12 @@ Model {
 	  Name			  "meter_switch_ctrl"
 	  SID			  "1906"
 	  Ports			  [1, 1]
-	  Position		  [885, 44, 955, 66]
+	  Position		  [885, 54, 955, 76]
 	  ZOrder		  -2
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
 	  MATLABFcn		  "meter_switch_ctrl(u(1), u(2))"
-	  OutputDimensions	  "2"
+	  OutputDimensions	  "3"
 	  Output1D		  off
 	  MaskDisplay		  "disp('Controller')"
 	  MaskIconFrame		  on
@@ -9122,7 +10086,7 @@ Model {
 	Line {
 	  SrcBlock		  "Demux"
 	  SrcPort		  4
-	  Points		  [-55, 0]
+	  Points		  [-60, 0]
 	  Branch {
 	    DstBlock		    "Mux2"
 	    DstPort		    2
@@ -9307,12 +10271,6 @@ Model {
 	  DstPort		  5
 	}
 	Line {
-	  SrcBlock		  "Mux4"
-	  SrcPort		  1
-	  DstBlock		  "Goto8"
-	  DstPort		  1
-	}
-	Line {
 	  SrcBlock		  "Mux7"
 	  SrcPort		  1
 	  DstBlock		  "meter_switch_ctrl"
@@ -9339,7 +10297,7 @@ Model {
 	Line {
 	  SrcBlock		  "Demux3"
 	  SrcPort		  1
-	  Points		  [-250, 0; 0, 150]
+	  Points		  [-250, 0; 0, 145]
 	  DstBlock		  "meter_switch"
 	  DstPort		  1
 	}
@@ -9352,29 +10310,65 @@ Model {
 	Line {
 	  SrcBlock		  "Transport\nDelay"
 	  SrcPort		  1
-	  DstBlock		  "Goto2"
+	  DstBlock		  "ld_reconn"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "From1"
+	  SrcPort		  1
+	  DstBlock		  "Mux2"
+	  DstPort		  5
+	}
+	Line {
+	  SrcBlock		  "Mux4"
+	  SrcPort		  1
+	  Points		  [-10, 0]
+	  Branch {
+	    DstBlock		    "Saturation"
+	    DstPort		    1
+	  }
+	  Branch {
+	    Points		    [0, -75]
+	    DstBlock		    "Scope1"
+	    DstPort		    1
+	  }
+	}
+	Line {
+	  SrcBlock		  "Saturation"
+	  SrcPort		  1
+	  Points		  [-10, 0]
+	  Branch {
+	    DstBlock		    "Goto8"
+	    DstPort		    1
+	  }
+	  Branch {
+	    Points		    [0, -60]
+	    DstBlock		    "Scope1"
+	    DstPort		    2
+	  }
+	}
+	Line {
+	  SrcBlock		  "Demux3"
+	  SrcPort		  3
+	  DstBlock		  "ld_reconn1"
 	  DstPort		  1
 	}
 	Annotation {
 	  SID			  "1896"
 	  Position		  [859, 347]
 	}
-	Annotation {
-	  SID			  "1921"
-	  Name			  "Inserting a saturation filter here\nactually destabilizes the system"
-	  Position		  [329, 178]
-	}
       }
     }
     Block {
       BlockType		      From
-      Name		      "ld_recon"
-      SID		      "2022"
-      Position		      [790, 337, 855, 353]
+      Name		      "ld_reconn"
+      SID		      "2070"
+      Position		      [790, 335, 880, 355]
       ZOrder		      -9
       BlockMirror	      on
       NamePlacement	      "alternate"
-      GotoTag		      "ld_recon"
+      ShowName		      off
+      GotoTag		      "ld_reconn"
       TagVisibility	      "global"
     }
     Block {
@@ -9873,27 +10867,6 @@ Model {
       DstPort		      LConn1
     }
     Line {
-      LineType		      "Connection"
-      SrcBlock		      "L3"
-      SrcPort		      LConn1
-      DstBlock		      "Three-Phase Breaker3"
-      DstPort		      LConn1
-    }
-    Line {
-      LineType		      "Connection"
-      SrcBlock		      "L3"
-      SrcPort		      LConn2
-      DstBlock		      "Three-Phase Breaker3"
-      DstPort		      LConn2
-    }
-    Line {
-      LineType		      "Connection"
-      SrcBlock		      "L3"
-      SrcPort		      LConn3
-      DstBlock		      "Three-Phase Breaker3"
-      DstPort		      LConn3
-    }
-    Line {
       SrcBlock		      "From2"
       SrcPort		      1
       DstBlock		      "Three-Phase Breaker1"
@@ -9947,7 +10920,7 @@ Model {
 	DstPort			1
       }
       Branch {
-	Points			[0, 60]
+	Points			[0, 85; 20, 0]
 	DstBlock		"Trip signals"
 	DstPort			1
       }
@@ -9961,13 +10934,13 @@ Model {
 	DstPort			1
       }
       Branch {
-	Points			[0, 80; 75, 0]
+	Points			[0, 85; 75, 0]
 	Branch {
-	  DstBlock		  "Trip signals1"
+	  DstBlock		  "Logical\nOperator5"
 	  DstPort		  1
 	}
 	Branch {
-	  DstBlock		  "Logical\nOperator5"
+	  DstBlock		  "Trip signals1"
 	  DstPort		  1
 	}
       }
@@ -9981,7 +10954,7 @@ Model {
 	DstPort			1
       }
       Branch {
-	Points			[0, -125]
+	Points			[0, -20]
 	Branch {
 	  DstBlock		  "Trip signals1"
 	  DstPort		  3
@@ -10001,13 +10974,13 @@ Model {
 	DstPort			1
       }
       Branch {
-	Points			[0, -175]
+	Points			[0, -20]
 	Branch {
 	  DstBlock		  "Trip signals1"
 	  DstPort		  4
 	}
 	Branch {
-	  DstBlock		  "Logical\nOperator1"
+	  DstBlock		  "Logical\nOperator3"
 	  DstPort		  1
 	}
       }
@@ -10021,13 +10994,13 @@ Model {
 	DstPort			1
       }
       Branch {
-	Points			[0, -225]
+	Points			[0, -20]
 	Branch {
 	  DstBlock		  "Trip signals1"
 	  DstPort		  5
 	}
 	Branch {
-	  DstBlock		  "Logical\nOperator3"
+	  DstBlock		  "Logical\nOperator4"
 	  DstPort		  1
 	}
       }
@@ -10105,13 +11078,13 @@ Model {
 	DstPort			1
       }
       Branch {
-	Points			[0, -75]
+	Points			[0, -20]
 	Branch {
 	  DstBlock		  "Trip signals1"
 	  DstPort		  2
 	}
 	Branch {
-	  DstBlock		  "Logical\nOperator6"
+	  DstBlock		  "Logical\nOperator1"
 	  DstPort		  1
 	}
       }
@@ -10190,7 +11163,7 @@ Model {
       DstPort		      1
     }
     Line {
-      SrcBlock		      "From5"
+      SrcBlock		      "Load shed"
       SrcPort		      1
       DstBlock		      "Scope3"
       DstPort		      3
@@ -10256,40 +11229,115 @@ Model {
       DstPort		      1
     }
     Line {
-      SrcBlock		      "ld_recon"
+      SrcBlock		      "Constant"
       SrcPort		      1
-      DstBlock		      "Trip signals1"
-      DstPort		      6
+      DstBlock		      "Product"
+      DstPort		      2
     }
     Line {
-      SrcBlock		      "Logical\nOperator6"
+      SrcBlock		      "Constant1"
       SrcPort		      1
-      DstBlock		      "Logical\nOperator7"
+      DstBlock		      "Product1"
+      DstPort		      2
+    }
+    Line {
+      SrcBlock		      "Constant2"
+      SrcPort		      1
+      DstBlock		      "Product2"
+      DstPort		      2
+    }
+    Line {
+      SrcBlock		      "Constant3"
+      SrcPort		      1
+      DstBlock		      "Product3"
+      DstPort		      2
+    }
+    Line {
+      SrcBlock		      "Product3"
+      SrcPort		      1
+      DstBlock		      "Add"
+      DstPort		      4
+    }
+    Line {
+      SrcBlock		      "Product2"
+      SrcPort		      1
+      DstBlock		      "Add"
+      DstPort		      3
+    }
+    Line {
+      SrcBlock		      "Product1"
+      SrcPort		      1
+      DstBlock		      "Add"
+      DstPort		      2
+    }
+    Line {
+      SrcBlock		      "Product"
+      SrcPort		      1
+      DstBlock		      "Add"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Add"
+      SrcPort		      1
+      DstBlock		      "Amount of load shed"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Logical\nOperator1"
+      SrcPort		      1
+      DstBlock		      "Product"
       DstPort		      1
     }
     Line {
       SrcBlock		      "Logical\nOperator2"
       SrcPort		      1
-      DstBlock		      "Logical\nOperator7"
-      DstPort		      2
-    }
-    Line {
-      SrcBlock		      "Logical\nOperator1"
-      SrcPort		      1
-      DstBlock		      "Logical\nOperator7"
-      DstPort		      3
+      DstBlock		      "Product1"
+      DstPort		      1
     }
     Line {
       SrcBlock		      "Logical\nOperator3"
       SrcPort		      1
-      DstBlock		      "Logical\nOperator7"
-      DstPort		      4
+      DstBlock		      "Product2"
+      DstPort		      1
     }
     Line {
-      SrcBlock		      "Logical\nOperator7"
+      SrcBlock		      "Logical\nOperator4"
       SrcPort		      1
-      DstBlock		      "Goto8"
+      DstBlock		      "Product3"
       DstPort		      1
+    }
+    Line {
+      SrcBlock		      "ld_reconn"
+      SrcPort		      1
+      DstBlock		      "Trip signals1"
+      DstPort		      6
+    }
+    Line {
+      LineType		      "Connection"
+      SrcBlock		      "Three-Phase Breaker3"
+      SrcPort		      LConn1
+      DstBlock		      "Variable\nLoad"
+      DstPort		      LConn1
+    }
+    Line {
+      LineType		      "Connection"
+      SrcBlock		      "Three-Phase Breaker3"
+      SrcPort		      LConn2
+      DstBlock		      "Variable\nLoad"
+      DstPort		      LConn2
+    }
+    Line {
+      LineType		      "Connection"
+      SrcBlock		      "Three-Phase Breaker3"
+      SrcPort		      LConn3
+      DstBlock		      "Variable\nLoad"
+      DstPort		      LConn3
+    }
+    Line {
+      SrcBlock		      "False positive"
+      SrcPort		      1
+      DstBlock		      "Scope3"
+      DstPort		      4
     }
     Annotation {
       SID		      "305"
