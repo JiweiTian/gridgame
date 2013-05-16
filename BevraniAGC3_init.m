@@ -32,6 +32,10 @@ flaggedMeter = 0;
 attackerInited = false;
 defenderInited = false;
 
+% debug
+global dbuf
+dbuf = struct('data', [], 'flag', []);
+
 % Log file
 global logFile
 logFile = fopen('log.txt', 'w+');
