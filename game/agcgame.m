@@ -18,9 +18,9 @@
 %
 
 stabletime = 30; % number of seconds during which frequency is stable after load shedding
-samplingrate = 0.5; % AGC sampling rate
-alpha = 0.1; % discount factor
-zerogs0 = false; % zero game matrix for state s0
+samplingrate = 1; % AGC sampling rate in Hz
+alpha = 0.9; % discount factor
+zerogs0 = true; % zero game matrix for state s0
 
 if stabletime == 30 && samplingrate == 0.5
   % M(a10,d1)
@@ -116,7 +116,7 @@ colormap(copper)
 bar([sim.policy1 sim.policy2])
 %title('Attack and Defense Strategies for Markov Game')
 xlabel('Actions')
-set(gca,'XTickLabel',{'a10,d1','a20,d2'})
+set(gca,'XTickLabel',{'a1, d1','a2, d2'})
 ylabel('Probability')
 legend({'Attacker','Defender'},'location','best')
 set(gcf, 'units', 'normalized')
